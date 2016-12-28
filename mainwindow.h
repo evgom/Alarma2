@@ -31,11 +31,11 @@ private:
 	QTime *horaActual, *nextAlarm;
 	QMediaPlayer *sound;
 	QTimer *timerVol, *timerDisplay;
-	QSettings settings;
+	QSettings settings, settingsAlarms;
 	quint8 volume, volIni, volFin, volInc;
 	quint32 timeStepVolume, timeSleep, timeMaxVol;
 	bool isEnableGrad, isEnableSleep, isPlaying;
-	QString file;
+	QString file, timeFormat;
 	QUrl urlFile;
 
 	void calcStepVolume(const quint32 timeTotal);
@@ -44,6 +44,7 @@ private:
 	void readSettings();
 	void playSong();
 	void stopSong();
+	void readAlarmsSettings();
 
 private slots:
 	void actualizaDisplay(const QTime &hora);

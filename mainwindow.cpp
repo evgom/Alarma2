@@ -11,11 +11,6 @@ MainWindow::MainWindow(QWidget *parent) :
 	sound = new QMediaPlayer;
 	nextAlarm = new QTime();
 
-
-
-	file = "/home/erick/Qt/Alarma2/1.mp3";
-
-
 	initVal();
 
 	// Timers
@@ -38,13 +33,16 @@ MainWindow::~MainWindow()
 void MainWindow::initVal()
 {
 	readSettings();
+	readAlarmsSettings();
 
+	timeFormat = "h:mm:ss ap";
 	isPlaying = false;
 	calcStepVolume(timeMaxVol);
 	urlFile = QUrl::fromLocalFile(file);
 
 	sound->setMedia(urlFile);
 	ui->LEsong->setText(urlFile.fileName());
+	ui->LEnextAlarm->setText(nextAlarm->toString(timeFormat));
 }
 
 void MainWindow::getHora()
@@ -69,7 +67,7 @@ void MainWindow::incVolume()
 
 void MainWindow::actualizaDisplay(const QTime &hora)
 {
-	ui->LEtime->setText(hora.toString("h:mm:ss ap"));
+	ui->LEtime->setText(hora.toString(timeFormat));
 }
 
 void MainWindow::on_Reproduce_clicked()
@@ -125,7 +123,7 @@ void MainWindow::setFile(const QString file)
 void MainWindow::setNextAlarm(const QTime &time)
 {
 	*nextAlarm = time;
-	ui->LEnextAlarm->setText(nextAlarm->toString("h:mm ap"));
+	ui->LEnextAlarm->setText(nextAlarm->toString(timeFormat));
 }
 
 void MainWindow::reloadSettings()
@@ -171,4 +169,17 @@ void MainWindow::stopSong()
 	sound->stop();
 	timerVol->stop();
 	isPlaying = false;
+}
+
+void MainWindow::readAlarmsSettings()
+{
+	QString date;
+
+	// Bug, falta crear el caso cuando no hay time guardado.
+	settingsAlarms.beginGroup("Alarms");
+	date = settingsAlarms.value("time").toString();
+	file = settingsAlarms.value("fileSong").toString();
+	settingsAlarms.endGroup();
+
+	*nextAlarm = QTime::fromString(date, "h:mm");
 }
