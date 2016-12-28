@@ -2,21 +2,21 @@
 #include "ui_options.h"
 #include <QDebug>
 
-options::options(QWidget *parent) :
+Options::Options(QWidget *parent) :
 	QDialog(parent),
-	ui(new Ui::options)
+	ui(new Ui::Options)
 {
 	ui->setupUi(this);
 
 	iniValues();
 }
 
-options::~options()
+Options::~Options()
 {
 	delete ui;
 }
 
-void options::iniValues()
+void Options::iniValues()
 {
 	QStringList list;
 
@@ -34,23 +34,23 @@ void options::iniValues()
 	ui->CHKvolGradual->setChecked(true);
 
 
-	options::on_CHKSleep_toggled(true);
-	options::on_CHKvolGradual_toggled(true);
+	Options::on_CHKSleep_toggled(true);
+	Options::on_CHKvolGradual_toggled(true);
 }
 
 
-void options::on_CHKSleep_toggled(bool checked)
+void Options::on_CHKSleep_toggled(bool checked)
 {
 	ui->CBtimeSleep->setEnabled(checked);
 }
 
-void options::on_CHKvolGradual_toggled(bool checked)
+void Options::on_CHKvolGradual_toggled(bool checked)
 {
 	ui->CBvolFin->setEnabled(checked);
 	ui->CBincVol->setEnabled(checked);
 }
 
-void options::on_buttonBox_accepted()
+void Options::on_buttonBox_accepted()
 {
 
 }

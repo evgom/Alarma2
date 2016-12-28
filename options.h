@@ -4,19 +4,19 @@
 #include <QDialog>
 
 namespace Ui {
-class options;
+class Options;
 }
 
-class options : public QDialog
+class Options : public QDialog
 {
 	Q_OBJECT
 
 public:
-	explicit options(QWidget *parent = 0);
-	~options();
+	explicit Options(QWidget *parent = 0);
+	~Options();
 
 private:
-	Ui::options *ui;
+	Ui::Options *ui;
 	void iniValues();
 
 private slots:

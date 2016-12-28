@@ -11,7 +11,10 @@ MainWindow::MainWindow(QWidget *parent) :
 	sound = new QMediaPlayer;
 	nextAlarm = new QTime();
 
+
+
 	file = "/home/erick/Qt/Alarma2/1.mp3";
+
 
 	initVal();
 
@@ -105,7 +108,7 @@ void MainWindow::sleepSongThread()
 
 void MainWindow::on_actionConfigurar_triggered()
 {
-	options *op = new options(this);
+	Options *op = new Options(this);
 	op->show();
 }
 
