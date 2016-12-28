@@ -37,11 +37,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::initVal()
 {
-	volume = 0;
-	incVol = 5;
-	timeSleep = 10;
-	sound->setVolume(volume);
-	calcStepVolume(60);
+	readSettings();
+
+	isPlaying = false;
+	calcStepVolume(timeMaxVol);
 	urlFile = QUrl::fromLocalFile(file);
 
 	sound->setMedia(urlFile);
@@ -56,11 +55,16 @@ void MainWindow::getHora()
 
 void MainWindow::incVolume()
 {
-	if(volume < 100){
-		volume += incVol;
-		sound->setVolume(volume);
-		qDebug() << "Volumen:" << volume << "%";
+	if(volume < volFin){
+		volume += volInc;
 	}
+	if (volume > volFin)
+	{
+		volume = volFin;
+		timerVol->stop();
+	}
+	sound->setVolume(volume);
+	qDebug() << "Volumen:" << volume << "%";
 }
 
 void MainWindow::actualizaDisplay(const QTime &hora)
@@ -70,27 +74,20 @@ void MainWindow::actualizaDisplay(const QTime &hora)
 
 void MainWindow::on_Reproduce_clicked()
 {
-	// Aumenta Volumen
-	timerVol->start(timeStepVolume);
-
-	sound->play();
-	qDebug() << "Reproduciendo";
+	playSong();
 }
 
-void MainWindow::calcStepVolume(const qint32 timeTotal)
+void MainWindow::calcStepVolume(const quint32 timeTotal)
 {
-	qint8 numberSteps = 100 / incVol;
+	quint8 numberSteps = volFin / volInc;
 	timeStepVolume = timeTotal / numberSteps * 1000;
 }
 
 
 void MainWindow::on_BTNduerme_clicked()
 {
-	// añadir método para stopSong
-	sound->stop();
-	volume = 0;
-	timerVol->stop();
-	sound->setVolume(volume);
+	stopSong();
+
 	//QtConcurrent::run(this, &MainWindow::sleepSongThread);
 
 	// BUG en el hilo, tambien verificar si está corriendo o no.
@@ -110,6 +107,7 @@ void MainWindow::on_actionConfigurar_triggered()
 {
 	Options *op = new Options(this);
 	op->show();
+	//readSettings();
 }
 
 void MainWindow::on_BTNAlarms_clicked()
@@ -128,4 +126,49 @@ void MainWindow::setNextAlarm(const QTime &time)
 {
 	*nextAlarm = time;
 	ui->LEnextAlarm->setText(nextAlarm->toString("h:mm ap"));
+}
+
+void MainWindow::reloadSettings()
+{
+	readSettings();
+}
+
+void MainWindow::readSettings()
+{
+	settings.beginGroup("Volume");
+	isEnableGrad = settings.value("volGradual", true).toBool();
+	volIni = settings.value("volumeInicial", 0).toInt();
+	volFin = settings.value("volumeFinal", 100).toInt();
+	volInc = settings.value("volumeIncrement", 5).toInt();
+	timeMaxVol = settings.value("timeToMaxVolumen", 60).toInt();
+	settings.endGroup();
+
+	settings.beginGroup("Sleep");
+	isEnableSleep = settings.value("enableSleep", true).toBool();
+	timeSleep = settings.value("timeSleep", 5).toInt();
+	settings.endGroup();
+}
+
+void MainWindow::playSong()
+{
+	if (!isPlaying){
+		volume = volIni;
+		sound->setVolume(volume);
+
+		// Aumenta Volumen
+		if (isEnableGrad)
+			timerVol->start(timeStepVolume);
+
+		sound->play();
+		isPlaying = true;
+		qDebug() << "Reproduciendo";
+		qDebug() << "Volumen:" << volume << "%";
+	}
+}
+
+void MainWindow::stopSong()
+{
+	sound->stop();
+	timerVol->stop();
+	isPlaying = false;
 }

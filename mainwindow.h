@@ -10,6 +10,8 @@
 #include <unistd.h>
 #include <options.h>
 #include <alarms.h>
+#include <QSettings>
+#include <QMap>
 
 namespace Ui {
 class MainWindow;
@@ -31,19 +33,24 @@ private:
 	QMediaPlayer *sound;
 	QTimer *timerVol;
 	QTimer *timerDisplay;
-	qint8 volume;
-	qint8 volIni;
-	qint8 volFin;
-	qint8 incVol;
-	qint32 timeStepVolume;
-	qint32 timeSleep;
+	QSettings settings;
+	quint8 volume;
+	quint8 volIni;
+	quint8 volFin;
+	quint8 volInc;
+	quint32 timeStepVolume;
+	quint32 timeSleep;
+	quint32 timeMaxVol;
+	bool isEnableGrad, isEnableSleep, isPlaying;
 	QString file;
 	QUrl urlFile;
-	bool isGrad, isSleep;
 
-	void calcStepVolume(const qint32 timeTotal);
+	void calcStepVolume(const quint32 timeTotal);
 	void initVal();
 	void sleepSongThread();
+	void readSettings();
+	void playSong();
+	void stopSong();
 
 private slots:
 	void actualizaDisplay(const QTime &hora);
@@ -55,12 +62,7 @@ private slots:
 	void on_BTNAlarms_clicked();
 	void setFile(const QString file);
 	void setNextAlarm(const QTime &time);
-	/* void setSleep(const qint32 timeSleep);
-	void setIncVol(const qint8 incVol);
-	void setVolIni(const qint8 volIni);
-	void setVolFin(const qint8 volFin);
-	void setGrad(const bool grad);
-	void setTimeSleep(const bool sleep);*/
+	void reloadSettings();
 
 signals:
 	void enviaHora(const QTime &hora);

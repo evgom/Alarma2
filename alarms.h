@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QFileDialog>
 #include <QDebug>
+#include <QSettings>
 
 namespace Ui {
 class Alarms;
@@ -26,6 +27,10 @@ private:
 	Ui::Alarms *ui;
 	QString file;
 	QTime *alarm;
+	QSettings settingsAlarms;
+	void initVal();
+	void readAlarmsSettings();
+	void writeAlarmsSettings();
 
 signals:
 	void newAlarm(const QTime &time);
