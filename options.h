@@ -20,13 +20,9 @@ public:
 private:
 	Ui::Options *ui;
 	QSettings settings;
-	bool isEnableGrad;
-	bool isEnableSleep;
-	quint8 volIni;
-	quint8 volFin;
-	quint8 volInc;
-	quint32 timeMaxVol;
-	quint32 timeSleep;
+	bool isEnableGrad, isEnableSleep;
+	quint8 volIni, volFin, volInc;
+	quint32 timeMaxVol, timeSleep;
 	void iniValues();
 	void readSettings();
 	void writeSettings();

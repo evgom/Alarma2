@@ -28,19 +28,12 @@ public:
 
 private:
 	Ui::MainWindow *ui;
-	QTime *horaActual;
-	QTime *nextAlarm;
+	QTime *horaActual, *nextAlarm;
 	QMediaPlayer *sound;
-	QTimer *timerVol;
-	QTimer *timerDisplay;
+	QTimer *timerVol, *timerDisplay;
 	QSettings settings;
-	quint8 volume;
-	quint8 volIni;
-	quint8 volFin;
-	quint8 volInc;
-	quint32 timeStepVolume;
-	quint32 timeSleep;
-	quint32 timeMaxVol;
+	quint8 volume, volIni, volFin, volInc;
+	quint32 timeStepVolume, timeSleep, timeMaxVol;
 	bool isEnableGrad, isEnableSleep, isPlaying;
 	QString file;
 	QUrl urlFile;
