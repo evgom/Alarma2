@@ -43,10 +43,10 @@ void MainWindow::initVal()
 
 	readSettings();
 	readAlarmsSettings();
+	calcStepVolume(timeMaxVol);
 
 	timeFormat = "h:mm:ss ap";
 	isAlarmActived = false;
-	calcStepVolume(timeMaxVol);
 	urlFile = QUrl::fromLocalFile(file);
 
 	sound->setMedia(urlFile);
@@ -150,6 +150,7 @@ void MainWindow::setNextAlarm(const QTime &time)
 void MainWindow::reloadSettings()
 {
 	readSettings();
+	calcStepVolume(timeMaxVol);
 }
 
 void MainWindow::readSettings()
