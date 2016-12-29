@@ -17,12 +17,14 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     options.cpp \
     alarms.cpp \
-    dialogsure.cpp
+    dialogsure.cpp \
+    systemtray.cpp
 
 HEADERS  += mainwindow.h \
     options.h \
     alarms.h \
-    dialogsure.h
+    dialogsure.h \
+    systemtray.h
 
 FORMS    += mainwindow.ui \
     options.ui \

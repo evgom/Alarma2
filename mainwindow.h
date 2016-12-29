@@ -12,6 +12,7 @@
 #include <QSettings>
 #include <QMap>
 #include <dialogsure.h>
+#include <systemtray.h>
 
 namespace Ui {
 class MainWindow;
@@ -24,6 +25,7 @@ class MainWindow : public QMainWindow
 public:
 	explicit MainWindow(QWidget *parent = 0);
 	~MainWindow();
+	SystemTray *systemTrayIcon;
 
 
 private:

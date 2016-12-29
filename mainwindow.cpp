@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	timeNow = new QTime();
 	nextAlarm = new QTime();
 	sound = new QMediaPlayer(this);
+	systemTrayIcon = new SystemTray(this);
 
 	// Timers
 	timerDisplays = new QTimer(this);
@@ -27,6 +28,27 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(timerSleepSong, SIGNAL(timeout()), this, SLOT(on_BTNtest_clicked()));
 
 	initVal();
+
+
+
+
+
+	/*QIcon *ico = new QIcon("/home/erick/Qt/Alarma2/TFC.ico");
+
+	setToolTip("Alarsdfdma");
+
+	QMenu *menu = new QMenu("hola");
+	menu->addAction("Temporal");
+	menu->addAction("Salir");
+
+	QSystemTrayIcon *sys = new QSystemTrayIcon(*ico, this);
+	sys->setContextMenu(menu);
+	sys->show();
+	//sys->deleteLater();*/
+
+
+
+
 }
 
 MainWindow::~MainWindow()
@@ -207,7 +229,7 @@ void MainWindow::stopSong()
 
 void MainWindow::sleepSong()
 {
-	if (isPlaying && isEnableAlarm){
+	if (isPlaying && isAlarmActived){
 		stopSong();
 		qDebug() << "Durmiendo por" << timeSleep << "segundos.";
 		timerSleepSong->start(timeSleep * 1000);
