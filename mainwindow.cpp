@@ -11,10 +11,6 @@ MainWindow::MainWindow(QWidget *parent) :
 	nextAlarm = new QTime();
 	sound = new QMediaPlayer;
 
-
-	// Feo
-	isEnableAlarm = true;
-
 	initVal();
 
 	// Timers
@@ -33,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
 	delete ui;
+	writeSettings();
 }
 
 void MainWindow::initVal()
@@ -48,6 +45,7 @@ void MainWindow::initVal()
 	sound->setMedia(urlFile);
 	ui->LEsong->setText(urlFile.fileName());
 	ui->LEnextAlarm->setText(nextAlarm->toString(timeFormat));
+	ui->CHKenableAlarm->setChecked(isEnableAlarm);
 }
 
 void MainWindow::timeLeftNextAlarm()
@@ -154,6 +152,8 @@ void MainWindow::reloadSettings()
 
 void MainWindow::readSettings()
 {
+	isEnableAlarm = settings.value("enableAlarm", false).toBool();
+
 	settings.beginGroup("Volume");
 	isEnableGrad = settings.value("volGradual", true).toBool();
 	volIni = settings.value("volumeInicial", 0).toInt();
@@ -166,6 +166,11 @@ void MainWindow::readSettings()
 	isEnableSleep = settings.value("enableSleep", true).toBool();
 	timeSleep = settings.value("timeSleep", 5).toInt();
 	settings.endGroup();
+}
+
+void MainWindow::writeSettings()
+{
+	settings.setValue("enableAlarm", isEnableAlarm);
 }
 
 void MainWindow::playSong()
@@ -212,4 +217,9 @@ void MainWindow::readAlarmsSettings()
 	settingsAlarms.endGroup();
 
 	*nextAlarm = QTime::fromString(date, "h:mm");
+}
+
+void MainWindow::on_CHKenableAlarm_clicked(bool checked)
+{
+	isEnableAlarm = checked;
 }

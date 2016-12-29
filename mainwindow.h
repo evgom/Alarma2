@@ -44,6 +44,7 @@ private:
 	void stopSong();
 	void sleepSong();
 	void readSettings();
+	void writeSettings();
 	void readAlarmsSettings();
 	void timeLeftNextAlarm();
 	void setTimeNow();
@@ -60,6 +61,7 @@ private slots:
 	void setNextAlarm(const QTime &time);
 	void reloadSettings();
 	void getTimes();
+	void on_CHKenableAlarm_clicked(bool checked);
 };
 
 #endif // MAINWINDOW_H
