@@ -7,7 +7,6 @@
 #include <QDebug>
 #include <QMediaPlayer>
 #include <QTimer>
-#include <unistd.h>
 #include <options.h>
 #include <alarms.h>
 #include <QSettings>
@@ -41,9 +40,9 @@ private:
 
 	void calcStepVolume(const quint32 timeTotal);
 	void initVal();
-	void sleepSongThread();
 	void playSong();
 	void stopSong();
+	void sleepSong();
 	void readSettings();
 	void readAlarmsSettings();
 	void timeLeftNextAlarm();

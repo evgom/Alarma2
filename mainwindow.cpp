@@ -120,28 +120,13 @@ void MainWindow::calcStepVolume(const quint32 timeTotal)
 
 void MainWindow::on_BTNduerme_clicked()
 {
-	stopSong();
-
-	//QtConcurrent::run(this, &MainWindow::sleepSongThread);
-
-	// BUG en el hilo, tambien verificar si está corriendo o no.
-	qDebug() << "Durmiendo por" << timeSleep << "segundos.";
-	sleep(timeSleep);
-	on_Reproduce_clicked();
-}
-
-void MainWindow::sleepSongThread()
-{
-	qDebug() << "Durmiendo por" << timeSleep << "segundos.";
-	sleep(timeSleep);
-	on_Reproduce_clicked();
+	sleepSong();
 }
 
 void MainWindow::on_actionConfigurar_triggered()
 {
 	Options *op = new Options(this);
 	op->show();
-	//readSettings();
 }
 
 void MainWindow::on_BTNAlarms_clicked()
@@ -189,7 +174,7 @@ void MainWindow::playSong()
 		volume = volIni;
 		sound->setVolume(volume);
 
-		// Aumenta Volumen
+		// Aumenta Volumen si está activado el volumen gradual.
 		if (isEnableGrad)
 			timerVol->start(timeStepVolume);
 
@@ -205,6 +190,15 @@ void MainWindow::stopSong()
 	sound->stop();
 	timerVol->stop();
 	isPlaying = false;
+}
+
+void MainWindow::sleepSong()
+{
+	if (isPlaying && isEnableAlarm){
+		stopSong();
+		qDebug() << "Durmiendo por" << timeSleep << "segundos.";
+		QTimer::singleShot(timeSleep*1000, this, SLOT(on_Reproduce_clicked()));
+	}
 }
 
 void MainWindow::readAlarmsSettings()
