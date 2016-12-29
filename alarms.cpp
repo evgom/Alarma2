@@ -20,17 +20,20 @@ Alarms::~Alarms()
 
 void Alarms::on_toolButton_clicked()
 {
+	// Buscar mejores extensiones
 	file = QFileDialog::getOpenFileName(this, "Seleccionar Canción", "~/",
 										"Archivos mp3(*.mp3);;Archivos m4a(*.m4a);;Todos(*.*)");
+
+	// crear validación mejor para archivo.
 	if(!file.isEmpty())
 		ui->LEfile->setText(file);
-	else
-		ui->LEfile->setText("");
 }
 
 void Alarms::on_buttonBox_accepted()
 {
 	*alarm = ui->TEalarm->time();
+	// para que funcione el arrastrar hay que quitar file:/// del resultado
+	file = ui->LEfile->text();
 	writeAlarmsSettings();
 
 	emit newFile(file);
