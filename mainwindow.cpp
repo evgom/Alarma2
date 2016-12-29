@@ -7,22 +7,27 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 	ui->setupUi(this);
 
-	horaActual = new QTime();
-	sound = new QMediaPlayer;
+	timeNow = new QTime();
 	nextAlarm = new QTime();
+	sound = new QMediaPlayer;
+
+
+	// Feo
+	isEnableAlarm = true;
 
 	initVal();
 
 	// Timers
-	timerDisplay = new QTimer(this);
-	connect(timerDisplay, SIGNAL(timeout()), this, SLOT(getHora()));
-	timerDisplay->start(500);
+	timerDisplays = new QTimer(this);
+	connect(timerDisplays, SIGNAL(timeout()), this, SLOT(updateDisplays()));
+	timerDisplays->start(500);
 
 	timerVol = new QTimer(this);
 	connect(timerVol, SIGNAL(timeout()), this, SLOT(incVolume()));
 
-	// Connects
-	connect(this, &MainWindow::enviaHora, this, &MainWindow::actualizaDisplay);
+	timerGetTimes = new QTimer(this);
+	connect(timerGetTimes, SIGNAL(timeout()), this, SLOT(getTimes()));
+	timerGetTimes->start(100);
 }
 
 MainWindow::~MainWindow()
@@ -45,10 +50,40 @@ void MainWindow::initVal()
 	ui->LEnextAlarm->setText(nextAlarm->toString(timeFormat));
 }
 
-void MainWindow::getHora()
+void MainWindow::timeLeftNextAlarm()
 {
-	*horaActual = QTime::currentTime();
-	emit enviaHora(*horaActual);
+	// Calcula cuanto tiempo ha pasado
+	qint32 msecs = timeNow->msecsTo(*nextAlarm);
+	qint32 secsTime;
+
+	// Si la fecha pasó hace un ajuste.
+	if (timeNow->operator <(*nextAlarm))
+		secsTime = msecs / 1000;
+	else
+		// 86400000 es el numero de segundos en el día
+		secsTime = 86400000 + (msecs / 1000);
+
+	// Es necesario para evitar el desfase del huso horario
+	timeLeft = QDateTime::fromTime_t(secsTime).toUTC();
+}
+
+void MainWindow::getTimes()
+{
+	timeLeftNextAlarm();
+	setTimeNow();
+	checkAlarm();
+}
+
+void MainWindow::setTimeNow()
+{
+	*timeNow = QTime::currentTime();
+}
+
+void MainWindow::checkAlarm()
+{
+	qint32 timeDiff = qAbs(timeNow->msecsTo(*nextAlarm));
+	if (isEnableAlarm && ( timeDiff < 1000 ))
+		playSong();
 }
 
 void MainWindow::incVolume()
@@ -65,9 +100,10 @@ void MainWindow::incVolume()
 	qDebug() << "Volumen:" << volume << "%";
 }
 
-void MainWindow::actualizaDisplay(const QTime &hora)
+void MainWindow::updateDisplays()
 {
-	ui->LEtime->setText(hora.toString(timeFormat));
+	ui->LEtime->setText(timeNow->toString(timeFormat));
+	ui->LEleftAlarm->setText(timeLeft.toString("h:mm:ss"));
 }
 
 void MainWindow::on_Reproduce_clicked()

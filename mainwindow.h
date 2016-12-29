@@ -28,38 +28,39 @@ public:
 
 private:
 	Ui::MainWindow *ui;
-	QTime *horaActual, *nextAlarm;
+	QTime *timeNow, *nextAlarm;
 	QMediaPlayer *sound;
-	QTimer *timerVol, *timerDisplay;
+	QTimer *timerVol, *timerDisplays, *timerGetTimes;
 	QSettings settings, settingsAlarms;
 	quint8 volume, volIni, volFin, volInc;
 	quint32 timeStepVolume, timeSleep, timeMaxVol;
-	bool isEnableGrad, isEnableSleep, isPlaying;
+	bool isEnableGrad, isEnableSleep, isPlaying, isEnableAlarm;
 	QString file, timeFormat;
 	QUrl urlFile;
+	QDateTime timeLeft;
 
 	void calcStepVolume(const quint32 timeTotal);
 	void initVal();
 	void sleepSongThread();
-	void readSettings();
 	void playSong();
 	void stopSong();
+	void readSettings();
 	void readAlarmsSettings();
+	void timeLeftNextAlarm();
+	void setTimeNow();
+	void checkAlarm();
 
 private slots:
-	void actualizaDisplay(const QTime &hora);
+	void updateDisplays();
 	void on_Reproduce_clicked();
 	void incVolume();
-	void getHora();
 	void on_BTNduerme_clicked();
 	void on_actionConfigurar_triggered();
 	void on_BTNAlarms_clicked();
 	void setFile(const QString file);
 	void setNextAlarm(const QTime &time);
 	void reloadSettings();
-
-signals:
-	void enviaHora(const QTime &hora);
+	void getTimes();
 };
 
 #endif // MAINWINDOW_H
