@@ -108,7 +108,11 @@ void MainWindow::incVolume()
 void MainWindow::updateDisplays()
 {
 	ui->LEtime->setText(timeNow->toString(timeFormat));
-	ui->LEleftAlarm->setText(timeLeft.toString("h:mm:ss"));
+
+	if (isEnableAlarm)
+		ui->LEleftAlarm->setText(timeLeft.toString("h:mm:ss"));
+	else
+		ui->LEleftAlarm->setText("");
 }
 
 void MainWindow::calcStepVolume(const quint32 timeTotal)
