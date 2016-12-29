@@ -11,6 +11,7 @@
 #include <alarms.h>
 #include <QSettings>
 #include <QMap>
+#include <dialogsure.h>
 
 namespace Ui {
 class MainWindow;
@@ -29,17 +30,16 @@ private:
 	Ui::MainWindow *ui;
 	QTime *timeNow, *nextAlarm;
 	QMediaPlayer *sound;
-	QTimer *timerVol, *timerDisplays, *timerGetTimes;
+	QTimer *timerVol, *timerDisplays, *timerGetTimes, *timerSleepSong;
 	QSettings settings, settingsAlarms;
 	quint8 volume, volIni, volFin, volInc;
 	quint32 timeStepVolume, timeSleep, timeMaxVol;
-	bool isEnableGrad, isEnableSleep, isPlaying, isEnableAlarm;
+	bool isEnableGrad, isEnableSleep, isPlaying, isEnableAlarm, isAlarmActived;
 	QString file, timeFormat;
 	QUrl urlFile;
 	QDateTime timeLeft;
 
 	void calcStepVolume(const quint32 timeTotal);
-	void initVal();
 	void playSong();
 	void stopSong();
 	void sleepSong();
@@ -52,7 +52,6 @@ private:
 
 private slots:
 	void updateDisplays();
-	void on_Reproduce_clicked();
 	void incVolume();
 	void on_BTNduerme_clicked();
 	void on_actionConfigurar_triggered();
@@ -62,6 +61,9 @@ private slots:
 	void reloadSettings();
 	void getTimes();
 	void on_CHKenableAlarm_clicked(bool checked);
+	void on_BTNstop_clicked();
+	void on_BTNtest_clicked();
+	void initVal();
 };
 
 #endif // MAINWINDOW_H

@@ -9,9 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	timeNow = new QTime();
 	nextAlarm = new QTime();
-	sound = new QMediaPlayer;
-
-	initVal();
+	sound = new QMediaPlayer(this);
 
 	// Timers
 	timerDisplays = new QTimer(this);
@@ -24,21 +22,30 @@ MainWindow::MainWindow(QWidget *parent) :
 	timerGetTimes = new QTimer(this);
 	connect(timerGetTimes, SIGNAL(timeout()), this, SLOT(getTimes()));
 	timerGetTimes->start(100);
+
+	timerSleepSong = new QTimer(this);
+	connect(timerSleepSong, SIGNAL(timeout()), this, SLOT(on_BTNtest_clicked()));
+
+	initVal();
 }
 
 MainWindow::~MainWindow()
 {
-	delete ui;
 	writeSettings();
+	delete ui;
 }
 
 void MainWindow::initVal()
 {
+	timerSleepSong->setSingleShot(true);
+	timerSleepSong->stop();
+	stopSong();
+
 	readSettings();
 	readAlarmsSettings();
 
 	timeFormat = "h:mm:ss ap";
-	isPlaying = false;
+	isAlarmActived = false;
 	calcStepVolume(timeMaxVol);
 	urlFile = QUrl::fromLocalFile(file);
 
@@ -89,7 +96,7 @@ void MainWindow::incVolume()
 	if(volume < volFin){
 		volume += volInc;
 	}
-	if (volume > volFin)
+	if (volume >= volFin)
 	{
 		volume = volFin;
 		timerVol->stop();
@@ -102,11 +109,6 @@ void MainWindow::updateDisplays()
 {
 	ui->LEtime->setText(timeNow->toString(timeFormat));
 	ui->LEleftAlarm->setText(timeLeft.toString("h:mm:ss"));
-}
-
-void MainWindow::on_Reproduce_clicked()
-{
-	playSong();
 }
 
 void MainWindow::calcStepVolume(const quint32 timeTotal)
@@ -195,6 +197,7 @@ void MainWindow::stopSong()
 	sound->stop();
 	timerVol->stop();
 	isPlaying = false;
+	qDebug() << "Deteniendo.";
 }
 
 void MainWindow::sleepSong()
@@ -202,7 +205,7 @@ void MainWindow::sleepSong()
 	if (isPlaying && isEnableAlarm){
 		stopSong();
 		qDebug() << "Durmiendo por" << timeSleep << "segundos.";
-		QTimer::singleShot(timeSleep*1000, this, SLOT(on_Reproduce_clicked()));
+		timerSleepSong->start(timeSleep * 1000);
 	}
 }
 
@@ -222,4 +225,20 @@ void MainWindow::readAlarmsSettings()
 void MainWindow::on_CHKenableAlarm_clicked(bool checked)
 {
 	isEnableAlarm = checked;
+}
+
+void MainWindow::on_BTNstop_clicked()
+{
+	if(isAlarmActived)
+	{
+		DialogSure *sure = new DialogSure(this);
+		sure->setWindowTitle("¿Detener Alarma?");
+		sure->show();
+	}
+}
+
+void MainWindow::on_BTNtest_clicked()
+{
+	isAlarmActived = true;
+	playSong();
 }

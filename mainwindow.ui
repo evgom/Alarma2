@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>508</width>
-    <height>359</height>
+    <height>362</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -156,9 +156,16 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="Reproduce">
+       <widget class="QPushButton" name="BTNstop">
         <property name="text">
-         <string>Reproduce</string>
+         <string>Detener</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="BTNtest">
+        <property name="text">
+         <string>Probar</string>
         </property>
        </widget>
       </item>

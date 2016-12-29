@@ -16,12 +16,15 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     options.cpp \
-    alarms.cpp
+    alarms.cpp \
+    dialogsure.cpp
 
 HEADERS  += mainwindow.h \
     options.h \
-    alarms.h
+    alarms.h \
+    dialogsure.h
 
 FORMS    += mainwindow.ui \
     options.ui \
-    alarms.ui
+    alarms.ui \
+    dialogsure.ui
