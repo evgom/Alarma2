@@ -46,7 +46,6 @@ void MainWindow::initVal()
 	readSettings();
 	readAlarmsSettings();
 	calcStepVolume(timeMaxVol);
-	setEnableAlarm(false);
 
 	timeFormat = "h:mm:ss ap";
 	urlFile = QUrl::fromLocalFile(file);
@@ -54,6 +53,7 @@ void MainWindow::initVal()
 	sound->setMedia(urlFile);
 	ui->LEsong->setText(urlFile.fileName());
 	ui->LEnextAlarm->setText(nextAlarm->toString(timeFormat));
+	ui->CHKenableAlarm->setChecked(isEnableAlarm);
 }
 
 void MainWindow::timeLeftNextAlarm()
