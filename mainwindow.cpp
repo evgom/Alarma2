@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	timeNow = new QTime();
 	nextAlarm = new QTime();
 	sound = new QMediaPlayer(this);
+	listSongs = new QMediaPlaylist(this);
 	systemTrayIcon = new SystemTray(this);
 
 	// Timers
@@ -49,7 +50,10 @@ void MainWindow::initVal()
 	timeFormat = "h:mm:ss ap";
 	urlFile = QUrl::fromLocalFile(file);
 
-	sound->setMedia(urlFile);
+	listSongs->setPlaybackMode(QMediaPlaylist::Loop);
+	listSongs->addMedia(urlFile);
+	sound->setPlaylist(listSongs);
+
 	ui->LEsong->setText(urlFile.fileName());
 	ui->LEnextAlarm->setText(nextAlarm->toString(timeFormat));
 	ui->CHKenableAlarm->setChecked(isEnableAlarm);
@@ -115,7 +119,7 @@ void MainWindow::toogleEnableAlarm()
 
 void MainWindow::incVolume()
 {
-	if(volume < volFin){
+	if(volume < volFin) {
 		volume += volInc;
 	}
 	if (volume >= volFin)
@@ -207,7 +211,7 @@ void MainWindow::writeSettings()
 
 void MainWindow::playSong()
 {
-	if ( sound->mediaStatus() == QMediaPlayer::LoadedMedia ){
+	if (sound->mediaStatus() == QMediaPlayer::LoadedMedia) {
 		volume = volIni;
 		sound->setVolume(volume);
 
@@ -230,7 +234,7 @@ void MainWindow::stopSong()
 
 void MainWindow::sleepSong()
 {
-	if (sound->state() == QMediaPlayer::PlayingState){
+	if (sound->state() == QMediaPlayer::PlayingState) {
 		stopSong();
 		qDebug() << "Durmiendo por" << timeSleep << "segundos.";
 		timerSleepSong->start(timeSleep * 1000);

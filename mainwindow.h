@@ -11,6 +11,7 @@
 #include <alarms.h>
 #include <QSettings>
 #include <QMap>
+#include <QMediaPlaylist>
 #include <dialogsure.h>
 #include <systemtray.h>
 #include <settings.h>
@@ -33,6 +34,7 @@ private:
 	Ui::MainWindow *ui;
 	QTime *timeNow, *nextAlarm;
 	QMediaPlayer *sound;
+	QMediaPlaylist *listSongs;
 	QTimer *timerVol, *timerDisplays, *timerGetTimes, *timerSleepSong;
 	QSettings settingsAlarms;
 	Settings *settings;
