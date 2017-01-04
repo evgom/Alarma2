@@ -36,7 +36,7 @@ private:
 	QSettings settings, settingsAlarms;
 	quint8 volume, volIni, volFin, volInc;
 	quint32 timeStepVolume, timeSleep, timeMaxVol;
-	bool isEnableGrad, isEnableSleep, isPlaying, isEnableAlarm, isAlarmActived;
+	bool isEnableVolGrad, isEnableSleep, isEnableAlarm, isAlarmActived;
 	QString file, timeFormat;
 	QUrl urlFile;
 	QDateTime timeLeft;

@@ -179,7 +179,7 @@ void MainWindow::readSettings()
 	isEnableAlarm = settings.value("enableAlarm", false).toBool();
 
 	settings.beginGroup("Volume");
-	isEnableGrad = settings.value("volGradual", true).toBool();
+	isEnableVolGrad = settings.value("volGradual", true).toBool();
 	volIni = settings.value("volumeInicial", 0).toInt();
 	volFin = settings.value("volumeFinal", 100).toInt();
 	volInc = settings.value("volumeIncrement", 5).toInt();
@@ -199,16 +199,15 @@ void MainWindow::writeSettings()
 
 void MainWindow::playSong()
 {
-	if (!isPlaying){
+	if (sound->state() != QMediaPlayer::PlayingState){
 		volume = volIni;
 		sound->setVolume(volume);
 
 		// Aumenta Volumen si está activado el volumen gradual.
-		if (isEnableGrad)
+		if (isEnableVolGrad)
 			timerVol->start(timeStepVolume);
 
 		sound->play();
-		isPlaying = true;
 		qDebug() << "Reproduciendo";
 		qDebug() << "Volumen:" << volume << "%";
 	}
@@ -218,13 +217,12 @@ void MainWindow::stopSong()
 {
 	sound->stop();
 	timerVol->stop();
-	isPlaying = false;
 	qDebug() << "Deteniendo.";
 }
 
 void MainWindow::sleepSong()
 {
-	if (isPlaying && isAlarmActived){
+	if ( (sound->state() == QMediaPlayer::PlayingState) && isAlarmActived){
 		stopSong();
 		qDebug() << "Durmiendo por" << timeSleep << "segundos.";
 		timerSleepSong->start(timeSleep * 1000);
@@ -267,4 +265,4 @@ void MainWindow::on_BTNtest_clicked()
 
 
 // Bug de que suena alarma al activarla y no hay alarma propuesta.
-// Probablemente se pueda cambiar isplaying.
+// Bug en probar y no hay canción.
