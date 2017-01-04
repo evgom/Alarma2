@@ -7,6 +7,8 @@ Options::Options(QWidget *parent) :
 {
 	ui->setupUi(this);
 
+	settings = new Settings(this);
+
 	readSettings();
 	iniValues();
 
@@ -31,54 +33,45 @@ void Options::iniValues()
 	ui->CBtimeMaxVol->addItems(list);
 	ui->CBvolInc->addItems({"5", "10", "15", "20"});
 
-	// Set settings
+	// Set wdigets settings
 	ui->CBvolIni->setCurrentText(QString::number(volIni));
 	ui->CBvolFin->setCurrentText(QString::number(volFin));
 	ui->CBvolInc->setCurrentText(QString::number(volInc));
 	ui->CBtimeMaxVol->setCurrentText(QString::number(timeMaxVol));
 	ui->CBtimeSleep->setCurrentText(QString::number(timeSleep));
 	ui->CHKSleep->setChecked(isEnableSleep);
-	ui->CHKvolGradual->setChecked(isEnableGrad);
+	ui->CHKvolGradual->setChecked(isEnableVolGrad);
 
 	Options::on_CHKSleep_toggled(isEnableSleep);
-	Options::on_CHKvolGradual_toggled(isEnableGrad);
+	Options::on_CHKvolGradual_toggled(isEnableVolGrad);
 }
 
 void Options::readSettings()
 {
-	settings.beginGroup("Volume");
-	isEnableGrad = settings.value("volGradual", true).toBool();
-	volIni = settings.value("volumeInicial", 0).toInt();
-	volFin = settings.value("volumeFinal", 100).toInt();
-	volInc = settings.value("volumeIncrement", 5).toInt();
-	timeMaxVol = settings.value("timeToMaxVolumen", 60).toInt();
-	settings.endGroup();
-
-	settings.beginGroup("Sleep");
-	isEnableSleep = settings.value("enableSleep", true).toBool();
-	timeSleep = settings.value("timeSleep", 5).toInt();
-	settings.endGroup();
+	isEnableVolGrad = settings->getIsEnableVolGrad();
+	volIni = settings->getVolIni();
+	volFin = settings->getVolFin();
+	volInc = settings->getVolInc();
+	timeMaxVol = settings->getTimeMaxVol();
+	isEnableSleep = settings->getIsEnableSleep();
+	timeSleep = settings->getTimeSleep();
 }
 
 void Options::writeSettings()
 {
-	settings.beginGroup("Volume");
-	settings.setValue("volGradual", isEnableGrad);
-	settings.setValue("volumeInicial", volIni);
-	settings.setValue("volumeFinal", volFin);
-	settings.setValue("volumeIncrement", volInc);
-	settings.setValue("timeToMaxVolumen", timeMaxVol);
-	settings.endGroup();
-
-	settings.beginGroup("Sleep");
-	settings.setValue("enableSleep", isEnableSleep);
-	settings.setValue("timeSleep", timeSleep);
-	settings.endGroup();
+	settings->setEnableVolGrad(isEnableVolGrad);
+	settings->setVolIni(volIni);
+	settings->setVolFin(volFin);
+	settings->setVolInc(volInc);
+	settings->setTimeMaxVol(timeMaxVol);
+	settings->setEnableSleep(isEnableSleep);
+	settings->setTimeSleep(timeSleep);
+	settings->writeSettings();
 }
 
 void Options::readValuesUI()
 {
-	isEnableGrad = ui->CHKvolGradual->isChecked();
+	isEnableVolGrad = ui->CHKvolGradual->isChecked();
 	volIni = ui->CBvolIni->currentText().toInt();
 	volFin = ui->CBvolFin->currentText().toInt();
 	volInc = ui->CBvolInc->currentText().toInt();

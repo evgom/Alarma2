@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	nextAlarm = new QTime();
 	sound = new QMediaPlayer(this);
 	systemTrayIcon = new SystemTray(this);
+	settings = new Settings(this);
 
 	// Timers
 	timerDisplays = new QTimer(this);
@@ -176,25 +177,20 @@ void MainWindow::reloadSettings()
 
 void MainWindow::readSettings()
 {
-	isEnableAlarm = settings.value("enableAlarm", false).toBool();
-
-	settings.beginGroup("Volume");
-	isEnableVolGrad = settings.value("volGradual", true).toBool();
-	volIni = settings.value("volumeInicial", 0).toInt();
-	volFin = settings.value("volumeFinal", 100).toInt();
-	volInc = settings.value("volumeIncrement", 5).toInt();
-	timeMaxVol = settings.value("timeToMaxVolumen", 60).toInt();
-	settings.endGroup();
-
-	settings.beginGroup("Sleep");
-	isEnableSleep = settings.value("enableSleep", true).toBool();
-	timeSleep = settings.value("timeSleep", 5).toInt();
-	settings.endGroup();
+	isEnableAlarm = settings->getIsEnableAlarm();
+	isEnableVolGrad = settings->getIsEnableVolGrad();
+	volIni = settings->getVolIni();
+	volFin = settings->getVolFin();
+	volInc = settings->getVolInc();
+	timeMaxVol = settings->getTimeMaxVol();
+	isEnableSleep = settings->getIsEnableSleep();
+	timeSleep = settings->getTimeSleep();
 }
 
 void MainWindow::writeSettings()
 {
-	settings.setValue("enableAlarm", isEnableAlarm);
+	settings->setEnableAlarm(isEnableAlarm);
+	settings->writeSettings();
 }
 
 void MainWindow::playSong()

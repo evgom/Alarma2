@@ -2,8 +2,8 @@
 #define OPTIONS_H
 
 #include <QDialog>
-#include <QSettings>
 #include <QDebug>
+#include <settings.h>
 
 namespace Ui {
 class Options;
@@ -19,10 +19,10 @@ public:
 
 private:
 	Ui::Options *ui;
-	QSettings settings;
-	bool isEnableGrad, isEnableSleep;
+	bool isEnableVolGrad, isEnableSleep;
 	quint8 volIni, volFin, volInc;
 	quint32 timeMaxVol, timeSleep;
+	Settings *settings;
 	void iniValues();
 	void readSettings();
 	void writeSettings();

@@ -13,6 +13,7 @@
 #include <QMap>
 #include <dialogsure.h>
 #include <systemtray.h>
+#include <settings.h>
 
 namespace Ui {
 class MainWindow;
@@ -33,7 +34,8 @@ private:
 	QTime *timeNow, *nextAlarm;
 	QMediaPlayer *sound;
 	QTimer *timerVol, *timerDisplays, *timerGetTimes, *timerSleepSong;
-	QSettings settings, settingsAlarms;
+	QSettings settingsAlarms;
+	Settings *settings;
 	quint8 volume, volIni, volFin, volInc;
 	quint32 timeStepVolume, timeSleep, timeMaxVol;
 	bool isEnableVolGrad, isEnableSleep, isEnableAlarm, isAlarmActived;
