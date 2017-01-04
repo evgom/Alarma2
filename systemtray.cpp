@@ -18,13 +18,8 @@ SystemTray::SystemTray(QObject *parent) : QSystemTrayIcon(parent)
 	connect(this, SIGNAL(activated(QSystemTrayIcon::ActivationReason) ), this,
 			SLOT(actionsSysTray(QSystemTrayIcon::ActivationReason)));
 
-	connect(this, SIGNAL(hideMain()), parent, SLOT(hide()));
-	connect(this, SIGNAL(showMain()), parent, SLOT(show()));
 	connect(this, SIGNAL(closeMain()), parent, SLOT(close()));
-
-	// Creo que se esto se puede cambiar a un emit y un connect.
-	connect(this, SIGNAL(getIsHiddenMain()), parent, SLOT(isMainHidden()));
-	connect(parent, SIGNAL(sendIsMainHidden(bool)), this, SLOT(mainHideShow(bool)));
+	connect(this, SIGNAL(toogleMainHide()), parent, SLOT(toogleMainHide()));
 
 	connect(this, SIGNAL(toogleEnableAlarm()), parent, SLOT(toogleEnableAlarm()));
 	connect(parent, SIGNAL(EnableAlarmChanged(bool)), this, SLOT(updateEnableAlarmMenu(bool)));
@@ -50,7 +45,7 @@ void SystemTray::actionsSysTray(QSystemTrayIcon::ActivationReason e)
 
 	case QSystemTrayIcon::Trigger:
 		//qDebug() << "Trigger";
-		emit getIsHiddenMain();
+		emit toogleMainHide();
 		break;
 
 	case QSystemTrayIcon::MiddleClick:
@@ -68,19 +63,6 @@ void SystemTray::msgCritical()
 	showMessage("Mensaje de prueba", "Hola hola", QSystemTrayIcon::Critical, 5000);
 }
 
-void SystemTray::mainHideShow(bool stateWindow)
-{
-	if (stateWindow)
-	{
-		emit showMain();
-		qDebug() << "Unhide main screen";
-	}
-	else
-	{
-		emit hideMain();
-		qDebug() << "Hide main screen";
-	}
-}
 
 void SystemTray::updateEnableAlarmMenu(bool statusAlarm)
 {

@@ -55,8 +55,8 @@ private:
 	void checkAlarm();
 
 public slots:
-    void isMainHidden();
-    void setEnableAlarm(bool);
+	void toogleMainHide();
+	void setEnableAlarm(bool);
 	void toogleEnableAlarm();
 
 private slots:
@@ -75,7 +75,7 @@ private slots:
 	void initVal();
 
 signals:
-    void sendIsMainHidden(bool);
+	void mainHideChanged(bool);
 	void EnableAlarmChanged(bool);
 };
 

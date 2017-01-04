@@ -92,9 +92,14 @@ void MainWindow::checkAlarm()
 		playSong();
 }
 
-void MainWindow::isMainHidden()
+void MainWindow::toogleMainHide()
 {
-	emit sendIsMainHidden(isHidden());
+	setHidden(!isHidden());
+	if (isHidden())
+		qDebug() << "Main screen hidden";
+	else
+		qDebug() << "Main screen showed";
+	emit mainHideChanged(isHidden());
 }
 
 void MainWindow::setEnableAlarm(bool state)

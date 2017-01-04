@@ -17,14 +17,11 @@ public slots:
 
 private slots:
 	void closeProgram();
-	void mainHideShow(bool);
 	void updateEnableAlarmMenu(bool);
 
 signals:
-	void hideMain();
-	void showMain();
 	void closeMain();
-	void getIsHiddenMain();
+	void toogleMainHide();
 	void toogleEnableAlarm();
 };
 
