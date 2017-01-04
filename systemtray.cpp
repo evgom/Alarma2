@@ -8,7 +8,7 @@ SystemTray::SystemTray(QObject *parent) : QSystemTrayIcon(parent)
 	setToolTip("Alarma 2");
 
 	QMenu *menu = new QMenu(qobject_cast<QWidget*>(parent) );
-	menu->addAction("Activar/Desactivar Alarma", this, SLOT(enableDisableAlarm()));
+	menu->addAction("Activar/Desactivar Alarma", this, SIGNAL(toogleEnableAlarm()));
 	menu->addAction("Salir", this, SLOT(closeProgram()));
 	setContextMenu(menu);
 
@@ -26,8 +26,8 @@ SystemTray::SystemTray(QObject *parent) : QSystemTrayIcon(parent)
 	connect(this, SIGNAL(getIsHiddenMain()), parent, SLOT(isMainHidden()));
 	connect(parent, SIGNAL(sendIsMainHidden(bool)), this, SLOT(mainHideShow(bool)));
 
-	//connect(this, SIGNAL(getEnableAlarm()), parent, SLOT(getEnableAlarm()));
-	//connect(parent, SIGNAL(sendIsEnableAlarm(bool)), this, SLOT(enableDisableAlarm(bool)));
+	connect(this, SIGNAL(toogleEnableAlarm()), parent, SLOT(toogleEnableAlarm()));
+	connect(parent, SIGNAL(EnableAlarmChanged(bool)), this, SLOT(updateEnableAlarmMenu(bool)));
 }
 
 void SystemTray::actionsSysTray(QSystemTrayIcon::ActivationReason e)
@@ -82,14 +82,10 @@ void SystemTray::mainHideShow(bool stateWindow)
 	}
 }
 
-void SystemTray::enableDisableAlarm()
+void SystemTray::updateEnableAlarmMenu(bool statusAlarm)
 {
-	emit getEnableAlarm();
-}
-
-void SystemTray::askEnableAlarm()
-{
-	emit getEnableAlarm();
+	// Implementar checked en el menú como ícono
+	qDebug() << "Alarma:" << statusAlarm;
 }
 
 // Implementación temporal. Parece que tiene que ver con closeevent.

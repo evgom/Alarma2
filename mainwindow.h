@@ -57,7 +57,7 @@ private:
 public slots:
     void isMainHidden();
     void setEnableAlarm(bool);
-    bool getEnableAlarm();
+	void toogleEnableAlarm();
 
 private slots:
 	void updateDisplays();
@@ -76,7 +76,7 @@ private slots:
 
 signals:
     void sendIsMainHidden(bool);
-    void sendIsEnableAlarm(bool);
+	void EnableAlarmChanged(bool);
 };
 
 #endif // MAINWINDOW_H

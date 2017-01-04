@@ -101,12 +101,12 @@ void MainWindow::setEnableAlarm(bool state)
 {
 	isEnableAlarm = state;
 	ui->CHKenableAlarm->setChecked(state);
+	emit EnableAlarmChanged (isEnableAlarm);
 }
 
-bool MainWindow::getEnableAlarm()
+void MainWindow::toogleEnableAlarm()
 {
-	emit sendIsEnableAlarm(isEnableAlarm);
-	return isEnableAlarm;
+	setEnableAlarm(!isEnableAlarm);
 }
 
 void MainWindow::incVolume()
@@ -240,7 +240,7 @@ void MainWindow::readAlarmsSettings()
 
 void MainWindow::on_CHKenableAlarm_clicked(bool checked)
 {
-	isEnableAlarm = checked;
+	setEnableAlarm(checked);
 }
 
 void MainWindow::on_BTNstop_clicked()

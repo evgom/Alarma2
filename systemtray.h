@@ -16,17 +16,16 @@ public slots:
 	void msgCritical();
 
 private slots:
-    void closeProgram();
-    void mainHideShow(bool);
-	void enableDisableAlarm();
-    void askEnableAlarm();
+	void closeProgram();
+	void mainHideShow(bool);
+	void updateEnableAlarmMenu(bool);
 
 signals:
-    void hideMain();
-    void showMain();
-    void closeMain();
-    void getIsHiddenMain();
-    void getEnableAlarm();
+	void hideMain();
+	void showMain();
+	void closeMain();
+	void getIsHiddenMain();
+	void toogleEnableAlarm();
 };
 
 #endif // SYSTEMTRAY_H
