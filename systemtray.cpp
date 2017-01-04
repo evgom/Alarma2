@@ -2,61 +2,99 @@
 
 SystemTray::SystemTray(QObject *parent) : QSystemTrayIcon(parent)
 {
-	QIcon *ico = new QIcon("/home/erick/Qt/Alarma2/TFC.ico");
+	QIcon *ico = new QIcon("/home/erick/Qt/Alarma2/alarm-clock.png");
 	setIcon(*ico);
 
-	setToolTip("Alarsdfdma");
+	setToolTip("Alarma 2");
 
-	QMenu *menu = new QMenu("hola");
-	menu->addAction("Temporal");
-	menu->addAction("Salir");
+	QMenu *menu = new QMenu(qobject_cast<QWidget*>(parent) );
+	menu->addAction("Activar/Desactivar Alarma", this, SLOT(enableDisableAlarm()));
+	menu->addAction("Salir", this, SLOT(closeProgram()));
 	setContextMenu(menu);
 
 	show();
 
 
-	connect(this, SIGNAL(messageClicked()), parent, SLOT(close()));
 	connect(this, SIGNAL(activated(QSystemTrayIcon::ActivationReason) ), this,
 			SLOT(actionsSysTray(QSystemTrayIcon::ActivationReason)));
 
-	connect(this, SIGNAL(hideMain()), parent, SLOT(close()));
+	connect(this, SIGNAL(hideMain()), parent, SLOT(hide()));
+	connect(this, SIGNAL(showMain()), parent, SLOT(show()));
+	connect(this, SIGNAL(closeMain()), parent, SLOT(close()));
+
+	// Creo que se esto se puede cambiar a un emit y un connect.
+	connect(this, SIGNAL(getIsHiddenMain()), parent, SLOT(isMainHidden()));
+	connect(parent, SIGNAL(sendIsMainHidden(bool)), this, SLOT(mainHideShow(bool)));
+
+	//connect(this, SIGNAL(getEnableAlarm()), parent, SLOT(getEnableAlarm()));
+	//connect(parent, SIGNAL(sendIsEnableAlarm(bool)), this, SLOT(enableDisableAlarm(bool)));
 }
 
 void SystemTray::actionsSysTray(QSystemTrayIcon::ActivationReason e)
 {
+	qDebug() << "Valor recibido" << e;
+
 	switch (e) {
 	case QSystemTrayIcon::Unknown:
 		qDebug() << "Unknown";
 		break;
 
-	/*case QSystemTrayIcon::Context:
+	case QSystemTrayIcon::Context:
 		qDebug() << "Context";
-		break;*/
+		closeProgram();
+		break;
 
 	case QSystemTrayIcon::DoubleClick:
 		qDebug() << "DoubleClick";
 		break;
 
-	/*case QSystemTrayIcon::Trigger:
-		qDebug() << "Trigger";
-		break;*/
+	case QSystemTrayIcon::Trigger:
+		//qDebug() << "Trigger";
+		emit getIsHiddenMain();
+		break;
 
 	case QSystemTrayIcon::MiddleClick:
 		qDebug() << "MiddleClick";
 		break;
 
 	default:
+		qDebug() << "Default" << e;
 		break;
 	}
-
-	qDebug() << "Valor recibido" << e;
-
-	//emit hideMain();
-	//deleteLater();
-	msgCritical();
 }
 
 void SystemTray::msgCritical()
 {
 	showMessage("Mensaje de prueba", "Hola hola", QSystemTrayIcon::Critical, 5000);
+}
+
+void SystemTray::mainHideShow(bool stateWindow)
+{
+	if (stateWindow)
+	{
+		emit showMain();
+		qDebug() << "Unhide main screen";
+	}
+	else
+	{
+		emit hideMain();
+		qDebug() << "Hide main screen";
+	}
+}
+
+void SystemTray::enableDisableAlarm()
+{
+	emit getEnableAlarm();
+}
+
+void SystemTray::askEnableAlarm()
+{
+	emit getEnableAlarm();
+}
+
+// Implementación temporal. Parece que tiene que ver con closeevent.
+void SystemTray::closeProgram()
+{
+	deleteLater();
+	emit closeMain();
 }

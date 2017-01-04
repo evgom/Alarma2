@@ -28,27 +28,6 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(timerSleepSong, SIGNAL(timeout()), this, SLOT(on_BTNtest_clicked()));
 
 	initVal();
-
-
-
-
-
-	/*QIcon *ico = new QIcon("/home/erick/Qt/Alarma2/TFC.ico");
-
-	setToolTip("Alarsdfdma");
-
-	QMenu *menu = new QMenu("hola");
-	menu->addAction("Temporal");
-	menu->addAction("Salir");
-
-	QSystemTrayIcon *sys = new QSystemTrayIcon(*ico, this);
-	sys->setContextMenu(menu);
-	sys->show();
-	//sys->deleteLater();*/
-
-
-
-
 }
 
 MainWindow::~MainWindow()
@@ -66,15 +45,14 @@ void MainWindow::initVal()
 	readSettings();
 	readAlarmsSettings();
 	calcStepVolume(timeMaxVol);
+	setEnableAlarm(false);
 
 	timeFormat = "h:mm:ss ap";
-	isAlarmActived = false;
 	urlFile = QUrl::fromLocalFile(file);
 
 	sound->setMedia(urlFile);
 	ui->LEsong->setText(urlFile.fileName());
 	ui->LEnextAlarm->setText(nextAlarm->toString(timeFormat));
-	ui->CHKenableAlarm->setChecked(isEnableAlarm);
 }
 
 void MainWindow::timeLeftNextAlarm()
@@ -109,8 +87,25 @@ void MainWindow::setTimeNow()
 void MainWindow::checkAlarm()
 {
 	qint32 timeDiff = qAbs(timeNow->msecsTo(*nextAlarm));
-	if (isEnableAlarm && ( timeDiff < 1000 ))
+	if (isEnableAlarm && ( timeDiff < 1000 ) && (ui->LEnextAlarm->text() != "") )
 		playSong();
+}
+
+void MainWindow::isMainHidden()
+{
+	emit sendIsMainHidden(isHidden());
+}
+
+void MainWindow::setEnableAlarm(bool state)
+{
+	isEnableAlarm = state;
+	ui->CHKenableAlarm->setChecked(state);
+}
+
+bool MainWindow::getEnableAlarm()
+{
+	emit sendIsEnableAlarm(isEnableAlarm);
+	return isEnableAlarm;
 }
 
 void MainWindow::incVolume()
@@ -269,3 +264,7 @@ void MainWindow::on_BTNtest_clicked()
 	isAlarmActived = true;
 	playSong();
 }
+
+
+// Bug de que suena alarma al activarla y no hay alarma propuesta.
+// Probablemente se pueda cambiar isplaying.

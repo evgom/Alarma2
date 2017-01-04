@@ -52,6 +52,11 @@ private:
 	void setTimeNow();
 	void checkAlarm();
 
+public slots:
+    void isMainHidden();
+    void setEnableAlarm(bool);
+    bool getEnableAlarm();
+
 private slots:
 	void updateDisplays();
 	void incVolume();
@@ -66,6 +71,10 @@ private slots:
 	void on_BTNstop_clicked();
 	void on_BTNtest_clicked();
 	void initVal();
+
+signals:
+    void sendIsMainHidden(bool);
+    void sendIsEnableAlarm(bool);
 };
 
 #endif // MAINWINDOW_H

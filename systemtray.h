@@ -11,12 +11,22 @@ class SystemTray : public QSystemTrayIcon
 public:
 	explicit SystemTray(QObject *parent = 0);
 
-signals:
-	void hideMain();
-
 public slots:
 	void actionsSysTray(QSystemTrayIcon::ActivationReason e);
 	void msgCritical();
+
+private slots:
+    void closeProgram();
+    void mainHideShow(bool);
+	void enableDisableAlarm();
+    void askEnableAlarm();
+
+signals:
+    void hideMain();
+    void showMain();
+    void closeMain();
+    void getIsHiddenMain();
+    void getEnableAlarm();
 };
 
 #endif // SYSTEMTRAY_H
