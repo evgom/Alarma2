@@ -40,7 +40,7 @@ private:
 	Settings *settings;
 	quint8 volume, volIni, volFin, volInc;
 	quint32 timeStepVolume, timeSleep, timeMaxVol;
-	bool enableVolGrad, enableSleep, enableAlarm;
+	bool enableVolGrad, enableSleep, enableAlarm, alarmActive;
 	QString file, timeFormat;
 	QUrl urlFile;
 	QDateTime timeLeft;
@@ -55,6 +55,8 @@ private:
 	void timeLeftNextAlarm();
 	void setTimeNow();
 	void checkAlarm();
+	void startAlarm();
+	void stopAlarm();
 
 public slots:
 	void toogleMainHide();

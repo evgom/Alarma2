@@ -41,7 +41,7 @@ void MainWindow::initVal()
 {
 	timerSleepSong->setSingleShot(true);
 	timerSleepSong->stop();
-	stopSong();
+	stopAlarm();
 
 	readSettings();
 	readAlarmsSettings();
@@ -92,7 +92,19 @@ void MainWindow::checkAlarm()
 {
 	qint32 timeDiff = qAbs(timeNow->msecsTo(*nextAlarm));
 	if (enableAlarm && ( timeDiff < 1000 ) && (ui->LEnextAlarm->text() != "") )
-		playSong();
+		startAlarm();
+}
+
+void MainWindow::startAlarm()
+{
+	alarmActive = true;
+	playSong();
+}
+
+void MainWindow::stopAlarm()
+{
+	alarmActive = false;
+	stopSong();
 }
 
 void MainWindow::toogleMainHide()
@@ -261,7 +273,7 @@ void MainWindow::on_CHKenableAlarm_clicked(bool checked)
 
 void MainWindow::on_BTNstop_clicked()
 {
-	if(sound->state() == QMediaPlayer::PlayingState)
+	if( alarmActive || (sound->state() == QMediaPlayer::PlayingState) )
 	{
 		DialogSure *sure = new DialogSure(this);
 		sure->setWindowTitle("¿Detener Alarma?");
@@ -271,5 +283,5 @@ void MainWindow::on_BTNstop_clicked()
 
 void MainWindow::on_BTNtest_clicked()
 {
-	playSong();
+	startAlarm();
 }
