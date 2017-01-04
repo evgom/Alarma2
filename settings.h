@@ -14,6 +14,7 @@ private:
 	quint8 volIni, volFin, volInc;
 	quint32 timeMaxVol, timeSleep;
 
+public:
 	void readSettings();
 
 public slots:

@@ -11,7 +11,6 @@ MainWindow::MainWindow(QWidget *parent) :
 	nextAlarm = new QTime();
 	sound = new QMediaPlayer(this);
 	systemTrayIcon = new SystemTray(this);
-	settings = new Settings(this);
 
 	// Timers
 	timerDisplays = new QTimer(this);
@@ -182,6 +181,8 @@ void MainWindow::reloadSettings()
 
 void MainWindow::readSettings()
 {
+	settings = new Settings(this);
+
 	isEnableAlarm = settings->getIsEnableAlarm();
 	isEnableVolGrad = settings->getIsEnableVolGrad();
 	volIni = settings->getVolIni();
@@ -190,12 +191,18 @@ void MainWindow::readSettings()
 	timeMaxVol = settings->getTimeMaxVol();
 	isEnableSleep = settings->getIsEnableSleep();
 	timeSleep = settings->getTimeSleep();
+
+	delete settings;
 }
 
 void MainWindow::writeSettings()
 {
+	settings = new Settings(this);
+
 	settings->setEnableAlarm(isEnableAlarm);
 	settings->writeSettings();
+
+	delete settings;
 }
 
 void MainWindow::playSong()
