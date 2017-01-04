@@ -257,7 +257,3 @@ void MainWindow::on_BTNtest_clicked()
 {
 	playSong();
 }
-
-
-// Bug de que suena alarma al activarla y no hay alarma propuesta.
-// Bug en probar y no hay canción.
