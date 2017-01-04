@@ -76,7 +76,7 @@ private slots:
 
 signals:
 	void mainHideChanged(bool);
-	void EnableAlarmChanged(bool);
+	void enableAlarmChanged(bool);
 };
 
 #endif // MAINWINDOW_H

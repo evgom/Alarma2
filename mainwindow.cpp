@@ -106,7 +106,7 @@ void MainWindow::setEnableAlarm(bool state)
 {
 	isEnableAlarm = state;
 	ui->CHKenableAlarm->setChecked(state);
-	emit EnableAlarmChanged (isEnableAlarm);
+	emit enableAlarmChanged (isEnableAlarm);
 }
 
 void MainWindow::toogleEnableAlarm()

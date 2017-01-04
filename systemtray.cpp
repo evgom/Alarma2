@@ -22,7 +22,7 @@ SystemTray::SystemTray(QObject *parent) : QSystemTrayIcon(parent)
 	connect(this, SIGNAL(toogleMainHide()), parent, SLOT(toogleMainHide()));
 
 	connect(this, SIGNAL(toogleEnableAlarm()), parent, SLOT(toogleEnableAlarm()));
-	connect(parent, SIGNAL(EnableAlarmChanged(bool)), this, SLOT(updateEnableAlarmMenu(bool)));
+	connect(parent, SIGNAL(enableAlarmChanged(bool)), this, SLOT(updateEnableAlarmMenu(bool)));
 }
 
 void SystemTray::actionsSysTray(QSystemTrayIcon::ActivationReason e)
