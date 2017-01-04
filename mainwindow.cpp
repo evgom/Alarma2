@@ -201,7 +201,7 @@ void MainWindow::readSettings()
 {
 	settings = new Settings(this);
 
-	enableAlarm = settings->isEnableAlarm();
+	setEnableAlarm(settings->isEnableAlarm());
 	enableVolGrad = settings->isEnableVolGrad();
 	volIni = settings->getVolIni();
 	volFin = settings->getVolFin();
