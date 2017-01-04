@@ -56,7 +56,6 @@ void MainWindow::initVal()
 
 	ui->LEsong->setText(urlFile.fileName());
 	ui->LEnextAlarm->setText(nextAlarm->toString(timeFormat));
-	ui->CHKenableAlarm->setChecked(enableAlarm);
 }
 
 void MainWindow::timeLeftNextAlarm()
@@ -119,9 +118,12 @@ void MainWindow::toogleMainHide()
 
 void MainWindow::setEnableAlarm(bool state)
 {
-	enableAlarm = state;
-	ui->CHKenableAlarm->setChecked(state);
-	emit enableAlarmChanged (enableAlarm);
+	if(state != enableAlarm) {
+		enableAlarm = state;
+		ui->CHKenableAlarm->setChecked(state);
+		qDebug() << "Alarma:" << state;
+		emit enableAlarmChanged (enableAlarm);
+	}
 }
 
 void MainWindow::toogleEnableAlarm()

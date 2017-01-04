@@ -17,12 +17,10 @@ public slots:
 
 private slots:
 	void closeProgram();
-	void updateEnableAlarmMenu(bool);
 
 signals:
 	void closeMain();
 	void toogleMainHide();
-	void toogleEnableAlarm();
 };
 
 #endif // SYSTEMTRAY_H

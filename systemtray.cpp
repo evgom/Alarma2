@@ -7,12 +7,18 @@ SystemTray::SystemTray(QObject *parent) : QSystemTrayIcon(parent)
 
 	setToolTip("Alarma 2");
 
+
+	QAction *actionAlarm = new QAction("Activar/Desactivar Alarma", this);
+	actionAlarm->setCheckable(true);
+
 	QMenu *menu = new QMenu(qobject_cast<QWidget*>(parent) );
-	menu->addAction("Activar/Desactivar Alarma", this, SIGNAL(toogleEnableAlarm()));
+	menu->insertAction(0, actionAlarm);
 	menu->addAction("Salir", this, SLOT(closeProgram()));
 	setContextMenu(menu);
 
-	show();
+	connect(actionAlarm, SIGNAL(toggled(bool)), parent, SLOT(setEnableAlarm(bool)));
+	connect(parent, SIGNAL(enableAlarmChanged(bool)), actionAlarm, SLOT(setChecked(bool)));
+	//Es probable que se necesite un QAction para el checkbox de la venta principal.
 
 
 	connect(this, SIGNAL(activated(QSystemTrayIcon::ActivationReason) ), this,
@@ -21,8 +27,8 @@ SystemTray::SystemTray(QObject *parent) : QSystemTrayIcon(parent)
 	connect(this, SIGNAL(closeMain()), parent, SLOT(close()));
 	connect(this, SIGNAL(toogleMainHide()), parent, SLOT(toogleMainHide()));
 
-	connect(this, SIGNAL(toogleEnableAlarm()), parent, SLOT(toogleEnableAlarm()));
-	connect(parent, SIGNAL(enableAlarmChanged(bool)), this, SLOT(updateEnableAlarmMenu(bool)));
+
+	show();
 }
 
 void SystemTray::actionsSysTray(QSystemTrayIcon::ActivationReason e)
@@ -61,13 +67,6 @@ void SystemTray::actionsSysTray(QSystemTrayIcon::ActivationReason e)
 void SystemTray::msgCritical()
 {
 	showMessage("Mensaje de prueba", "Hola hola", QSystemTrayIcon::Critical, 5000);
-}
-
-
-void SystemTray::updateEnableAlarmMenu(bool statusAlarm)
-{
-	// Implementar checked en el menú como ícono
-	qDebug() << "Alarma:" << statusAlarm;
 }
 
 // Implementación temporal. Parece que tiene que ver con closeevent.
