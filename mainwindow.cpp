@@ -195,7 +195,7 @@ void MainWindow::writeSettings()
 
 void MainWindow::playSong()
 {
-	if (sound->state() != QMediaPlayer::PlayingState){
+	if ( sound->mediaStatus() == QMediaPlayer::LoadedMedia ){
 		volume = volIni;
 		sound->setVolume(volume);
 
@@ -218,7 +218,7 @@ void MainWindow::stopSong()
 
 void MainWindow::sleepSong()
 {
-	if ( (sound->state() == QMediaPlayer::PlayingState) && isAlarmActived){
+	if (sound->state() == QMediaPlayer::PlayingState){
 		stopSong();
 		qDebug() << "Durmiendo por" << timeSleep << "segundos.";
 		timerSleepSong->start(timeSleep * 1000);
@@ -245,7 +245,7 @@ void MainWindow::on_CHKenableAlarm_clicked(bool checked)
 
 void MainWindow::on_BTNstop_clicked()
 {
-	if(isAlarmActived)
+	if(sound->state() == QMediaPlayer::PlayingState)
 	{
 		DialogSure *sure = new DialogSure(this);
 		sure->setWindowTitle("¿Detener Alarma?");
@@ -255,7 +255,6 @@ void MainWindow::on_BTNstop_clicked()
 
 void MainWindow::on_BTNtest_clicked()
 {
-	isAlarmActived = true;
 	playSong();
 }
 

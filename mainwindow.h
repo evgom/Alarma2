@@ -38,7 +38,7 @@ private:
 	Settings *settings;
 	quint8 volume, volIni, volFin, volInc;
 	quint32 timeStepVolume, timeSleep, timeMaxVol;
-	bool isEnableVolGrad, isEnableSleep, isEnableAlarm, isAlarmActived;
+	bool isEnableVolGrad, isEnableSleep, isEnableAlarm;
 	QString file, timeFormat;
 	QUrl urlFile;
 	QDateTime timeLeft;
