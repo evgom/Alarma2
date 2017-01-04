@@ -27,7 +27,6 @@ private:
 	void readSettings();
 	void writeSettings();
 	void readValuesUI();
-	void sendValues();
 
 private slots:
 	void on_CHKSleep_toggled(bool checked);

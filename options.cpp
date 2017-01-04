@@ -66,6 +66,7 @@ void Options::writeSettings()
 	settings->setTimeMaxVol(timeMaxVol);
 	settings->setEnableSleep(isEnableSleep);
 	settings->setTimeSleep(timeSleep);
+
 	settings->writeSettings();
 }
 
@@ -78,11 +79,6 @@ void Options::readValuesUI()
 	timeMaxVol = ui->CBtimeMaxVol->currentText().toInt();
 	isEnableSleep = ui->CHKSleep->isChecked();
 	timeSleep = ui->CBtimeSleep->currentText().toInt();
-}
-
-void Options::sendValues()
-{
-
 }
 
 void Options::on_CHKSleep_toggled(bool checked)
@@ -101,7 +97,6 @@ void Options::on_buttonBox_accepted()
 {
 	readValuesUI();
 	writeSettings();
-	sendValues();
 	emit settingsUpdated();
 }
 
