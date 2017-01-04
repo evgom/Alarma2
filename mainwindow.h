@@ -40,7 +40,7 @@ private:
 	Settings *settings;
 	quint8 volume, volIni, volFin, volInc;
 	quint32 timeStepVolume, timeSleep, timeMaxVol;
-	bool isEnableVolGrad, isEnableSleep, isEnableAlarm;
+	bool enableVolGrad, enableSleep, enableAlarm;
 	QString file, timeFormat;
 	QUrl urlFile;
 	QDateTime timeLeft;
@@ -70,7 +70,7 @@ private slots:
 	void setFile(const QString file);
 	void setNextAlarm(const QTime &time);
 	void reloadSettings();
-	void getTimes();
+	void calcTimes();
 	void on_CHKenableAlarm_clicked(bool checked);
 	void on_BTNstop_clicked();
 	void on_BTNtest_clicked();

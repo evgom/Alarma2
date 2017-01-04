@@ -19,7 +19,7 @@ public:
 
 private:
 	Ui::Options *ui;
-	bool isEnableVolGrad, isEnableSleep;
+	bool enableVolGrad, enableSleep;
 	quint8 volIni, volFin, volInc;
 	quint32 timeMaxVol, timeSleep;
 	Settings *settings;

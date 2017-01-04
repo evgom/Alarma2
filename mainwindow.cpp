@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(timerVol, SIGNAL(timeout()), this, SLOT(incVolume()));
 
 	timerGetTimes = new QTimer(this);
-	connect(timerGetTimes, SIGNAL(timeout()), this, SLOT(getTimes()));
+	connect(timerGetTimes, SIGNAL(timeout()), this, SLOT(calcTimes()));
 	timerGetTimes->start(100);
 
 	timerSleepSong = new QTimer(this);
@@ -56,7 +56,7 @@ void MainWindow::initVal()
 
 	ui->LEsong->setText(urlFile.fileName());
 	ui->LEnextAlarm->setText(nextAlarm->toString(timeFormat));
-	ui->CHKenableAlarm->setChecked(isEnableAlarm);
+	ui->CHKenableAlarm->setChecked(enableAlarm);
 }
 
 void MainWindow::timeLeftNextAlarm()
@@ -76,7 +76,7 @@ void MainWindow::timeLeftNextAlarm()
 	timeLeft = QDateTime::fromTime_t(secsTime).toUTC();
 }
 
-void MainWindow::getTimes()
+void MainWindow::calcTimes()
 {
 	timeLeftNextAlarm();
 	setTimeNow();
@@ -91,7 +91,7 @@ void MainWindow::setTimeNow()
 void MainWindow::checkAlarm()
 {
 	qint32 timeDiff = qAbs(timeNow->msecsTo(*nextAlarm));
-	if (isEnableAlarm && ( timeDiff < 1000 ) && (ui->LEnextAlarm->text() != "") )
+	if (enableAlarm && ( timeDiff < 1000 ) && (ui->LEnextAlarm->text() != "") )
 		playSong();
 }
 
@@ -107,14 +107,14 @@ void MainWindow::toogleMainHide()
 
 void MainWindow::setEnableAlarm(bool state)
 {
-	isEnableAlarm = state;
+	enableAlarm = state;
 	ui->CHKenableAlarm->setChecked(state);
-	emit enableAlarmChanged (isEnableAlarm);
+	emit enableAlarmChanged (enableAlarm);
 }
 
 void MainWindow::toogleEnableAlarm()
 {
-	setEnableAlarm(!isEnableAlarm);
+	setEnableAlarm(!enableAlarm);
 }
 
 void MainWindow::incVolume()
@@ -135,7 +135,7 @@ void MainWindow::updateDisplays()
 {
 	ui->LEtime->setText(timeNow->toString(timeFormat));
 
-	if (isEnableAlarm)
+	if (enableAlarm)
 		ui->LEleftAlarm->setText(timeLeft.toString("h:mm:ss"));
 	else
 		ui->LEleftAlarm->setText("");
@@ -187,13 +187,13 @@ void MainWindow::readSettings()
 {
 	settings = new Settings(this);
 
-	isEnableAlarm = settings->getIsEnableAlarm();
-	isEnableVolGrad = settings->getIsEnableVolGrad();
+	enableAlarm = settings->isEnableAlarm();
+	enableVolGrad = settings->isEnableVolGrad();
 	volIni = settings->getVolIni();
 	volFin = settings->getVolFin();
 	volInc = settings->getVolInc();
 	timeMaxVol = settings->getTimeMaxVol();
-	isEnableSleep = settings->getIsEnableSleep();
+	enableSleep = settings->isEnableSleep();
 	timeSleep = settings->getTimeSleep();
 
 	delete settings;
@@ -203,7 +203,7 @@ void MainWindow::writeSettings()
 {
 	settings = new Settings(this);
 
-	settings->setEnableAlarm(isEnableAlarm);
+	settings->setEnableAlarm(enableAlarm);
 	settings->writeSettings();
 
 	delete settings;
@@ -216,7 +216,7 @@ void MainWindow::playSong()
 		sound->setVolume(volume);
 
 		// Aumenta Volumen si está activado el volumen gradual.
-		if (isEnableVolGrad)
+		if (enableVolGrad)
 			timerVol->start(timeStepVolume);
 
 		sound->play();

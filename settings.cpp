@@ -8,10 +8,10 @@ Settings::Settings(QObject *parent) : QSettings(parent)
 
 void Settings::readSettings()
 {
-	isEnableAlarm = value("enableAlarm", false).toBool();
+	enableAlarm = value("enableAlarm", false).toBool();
 
 	beginGroup("Volume");
-	isEnableVolGrad = value("volGradual", true).toBool();
+	enableVolGrad = value("volGradual", true).toBool();
 	volIni = value("volumeInicial", 0).toInt();
 	volFin = value("volumeFinal", 100).toInt();
 	volInc = value("volumeIncrement", 5).toInt();
@@ -19,17 +19,17 @@ void Settings::readSettings()
 	endGroup();
 
 	beginGroup("Sleep");
-	isEnableSleep = value("enableSleep", true).toBool();
+	enableSleep = value("enableSleep", true).toBool();
 	timeSleep = value("timeSleep", 5).toInt();
 	endGroup();
 }
 
 void Settings::writeSettings()
 {
-	setValue("enableAlarm", isEnableAlarm);
+	setValue("enableAlarm", enableAlarm);
 
 	beginGroup("Volume");
-	setValue("volGradual", isEnableVolGrad);
+	setValue("volGradual", enableVolGrad);
 	setValue("volumeInicial", volIni);
 	setValue("volumeFinal", volFin);
 	setValue("volumeIncrement", volInc);
@@ -37,24 +37,24 @@ void Settings::writeSettings()
 	endGroup();
 
 	beginGroup("Sleep");
-	setValue("enableSleep", isEnableSleep);
+	setValue("enableSleep", enableSleep);
 	setValue("timeSleep", timeSleep);
 	endGroup();
 }
 
-bool Settings::getIsEnableAlarm()
+bool Settings::isEnableAlarm()
 {
-	return isEnableAlarm;
+	return enableAlarm;
 }
 
-bool Settings::getIsEnableVolGrad()
+bool Settings::isEnableVolGrad()
 {
-	return isEnableVolGrad;
+	return enableVolGrad;
 }
 
-bool Settings::getIsEnableSleep()
+bool Settings::isEnableSleep()
 {
-	return isEnableSleep;
+	return enableSleep;
 }
 
 quint8 Settings::getVolIni()
@@ -84,17 +84,17 @@ quint32 Settings::getTimeSleep()
 
 void Settings::setEnableAlarm(bool value)
 {
-	isEnableAlarm = value;
+	enableAlarm = value;
 }
 
 void Settings::setEnableVolGrad(bool value)
 {
-	isEnableVolGrad = value;
+	enableVolGrad = value;
 }
 
 void Settings::setEnableSleep(bool value)
 {
-	isEnableSleep = value;
+	enableSleep = value;
 }
 
 void Settings::setVolIni(quint8 value)

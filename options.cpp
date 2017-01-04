@@ -39,32 +39,32 @@ void Options::iniValues()
 	ui->CBvolInc->setCurrentText(QString::number(volInc));
 	ui->CBtimeMaxVol->setCurrentText(QString::number(timeMaxVol));
 	ui->CBtimeSleep->setCurrentText(QString::number(timeSleep));
-	ui->CHKSleep->setChecked(isEnableSleep);
-	ui->CHKvolGradual->setChecked(isEnableVolGrad);
+	ui->CHKSleep->setChecked(enableSleep);
+	ui->CHKvolGradual->setChecked(enableVolGrad);
 
-	Options::on_CHKSleep_toggled(isEnableSleep);
-	Options::on_CHKvolGradual_toggled(isEnableVolGrad);
+	Options::on_CHKSleep_toggled(enableSleep);
+	Options::on_CHKvolGradual_toggled(enableVolGrad);
 }
 
 void Options::readSettings()
 {
-	isEnableVolGrad = settings->getIsEnableVolGrad();
+	enableVolGrad = settings->isEnableVolGrad();
 	volIni = settings->getVolIni();
 	volFin = settings->getVolFin();
 	volInc = settings->getVolInc();
 	timeMaxVol = settings->getTimeMaxVol();
-	isEnableSleep = settings->getIsEnableSleep();
+	enableSleep = settings->isEnableSleep();
 	timeSleep = settings->getTimeSleep();
 }
 
 void Options::writeSettings()
 {
-	settings->setEnableVolGrad(isEnableVolGrad);
+	settings->setEnableVolGrad(enableVolGrad);
 	settings->setVolIni(volIni);
 	settings->setVolFin(volFin);
 	settings->setVolInc(volInc);
 	settings->setTimeMaxVol(timeMaxVol);
-	settings->setEnableSleep(isEnableSleep);
+	settings->setEnableSleep(enableSleep);
 	settings->setTimeSleep(timeSleep);
 
 	settings->writeSettings();
@@ -72,12 +72,12 @@ void Options::writeSettings()
 
 void Options::readValuesUI()
 {
-	isEnableVolGrad = ui->CHKvolGradual->isChecked();
+	enableVolGrad = ui->CHKvolGradual->isChecked();
 	volIni = ui->CBvolIni->currentText().toInt();
 	volFin = ui->CBvolFin->currentText().toInt();
 	volInc = ui->CBvolInc->currentText().toInt();
 	timeMaxVol = ui->CBtimeMaxVol->currentText().toInt();
-	isEnableSleep = ui->CHKSleep->isChecked();
+	enableSleep = ui->CHKSleep->isChecked();
 	timeSleep = ui->CBtimeSleep->currentText().toInt();
 }
 

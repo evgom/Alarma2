@@ -10,7 +10,7 @@ public:
 	explicit Settings(QObject *parent = 0);
 
 private:
-	bool isEnableAlarm, isEnableVolGrad, isEnableSleep;
+	bool enableAlarm, enableVolGrad, enableSleep;
 	quint8 volIni, volFin, volInc;
 	quint32 timeMaxVol, timeSleep;
 
@@ -18,9 +18,9 @@ public:
 	void readSettings();
 
 public slots:
-	bool getIsEnableAlarm();
-	bool getIsEnableVolGrad();
-	bool getIsEnableSleep();
+	bool isEnableAlarm();
+	bool isEnableVolGrad();
+	bool isEnableSleep();
 	quint8 getVolIni();
 	quint8 getVolFin();
 	quint8 getVolInc();
