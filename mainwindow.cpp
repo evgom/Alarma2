@@ -147,8 +147,8 @@ void MainWindow::updateDisplays()
 
 void MainWindow::calcStepVolume(const quint32 timeTotal)
 {
-	quint8 numberSteps = volFin / volInc;
-	timeStepVolume = timeTotal / numberSteps * 1000;
+	quint8 numberSteps = qCeil(1.0 * (volFin - volIni) / volInc);
+	timeStepVolume = 1000 * timeTotal / numberSteps;
 }
 
 

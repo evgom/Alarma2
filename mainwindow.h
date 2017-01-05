@@ -15,6 +15,7 @@
 #include <dialogsure.h>
 #include <systemtray.h>
 #include <settings.h>
+#include <QtMath>
 
 namespace Ui {
 class MainWindow;
