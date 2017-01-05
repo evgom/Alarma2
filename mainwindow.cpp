@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
+	timeFormat = "h:mm:ss ap";
 
 	timeNow = new QTime();
 	nextAlarm = new QTime();
@@ -47,7 +48,6 @@ void MainWindow::initVal()
 	readAlarmsSettings();
 	calcStepVolume(timeMaxVol);
 
-	timeFormat = "h:mm:ss ap";
 	urlFile = QUrl::fromLocalFile(file);
 
 	listSongs->setPlaybackMode(QMediaPlaylist::Loop);
@@ -55,7 +55,6 @@ void MainWindow::initVal()
 	sound->setPlaylist(listSongs);
 
 	ui->LEsong->setText(urlFile.fileName());
-	ui->LEnextAlarm->setText(nextAlarm->toString(timeFormat));
 }
 
 void MainWindow::timeLeftNextAlarm()
@@ -187,6 +186,7 @@ void MainWindow::setFile(const QString file)
 
 void MainWindow::setNextAlarm(const QTime &time)
 {
+	// Posible leak de memoria
 	*nextAlarm = time;
 	ui->LEnextAlarm->setText(nextAlarm->toString(timeFormat));
 }
@@ -265,7 +265,7 @@ void MainWindow::readAlarmsSettings()
 	file = settingsAlarms.value("fileSong").toString();
 	settingsAlarms.endGroup();
 
-	*nextAlarm = QTime::fromString(date, "h:mm");
+	setNextAlarm(QTime::fromString(date, "h:mm"));
 }
 
 void MainWindow::on_CHKenableAlarm_clicked(bool checked)
