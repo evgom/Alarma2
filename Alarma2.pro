@@ -16,19 +16,21 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     options.cpp \
-    alarms.cpp \
     dialogsure.cpp \
     systemtray.cpp \
-    settings.cpp
+    settings.cpp \
+    alarmsconfigdialog.cpp
 
 HEADERS  += mainwindow.h \
     options.h \
-    alarms.h \
     dialogsure.h \
     systemtray.h \
-    settings.h
+    settings.h \
+    alarmsconfigdialog.h
 
 FORMS    += mainwindow.ui \
     options.ui \
-    alarms.ui \
-    dialogsure.ui
+    dialogsure.ui \
+    alarmsconfigdialog.ui
+
+DISTFILES +=

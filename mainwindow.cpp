@@ -175,7 +175,7 @@ void MainWindow::on_actionConfigurar_triggered()
 
 void MainWindow::on_BTNAlarms_clicked()
 {
-	Alarms *al = new Alarms(this);
+	AlarmsConfigDialog *al = new AlarmsConfigDialog(this);
 	al->show();
 }
 

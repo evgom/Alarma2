@@ -8,7 +8,7 @@
 #include <QMediaPlayer>
 #include <QTimer>
 #include <options.h>
-#include <alarms.h>
+#include <alarmsconfigdialog.h>
 #include <QSettings>
 #include <QMap>
 #include <QMediaPlaylist>
