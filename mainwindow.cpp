@@ -171,9 +171,11 @@ void MainWindow::on_BTNAlarms_clicked()
 
 void MainWindow::setFile(const QString file)
 {
+	QFileInfo checkFile(file);
 	QUrl urlFile;
 
-	urlFile = QUrl::fromLocalFile(file);
+	if (checkFile.exists() && checkFile.isFile())
+		urlFile = QUrl::fromLocalFile(file);
 
 	listSongs->setPlaybackMode(QMediaPlaylist::Loop);
 	listSongs->clear();
