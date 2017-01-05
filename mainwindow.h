@@ -36,7 +36,6 @@ private:
 	QMediaPlayer *sound;
 	QMediaPlaylist *listSongs;
 	QTimer *timerVol, *timerDisplays, *timerGetTimes, *timerSleepSong;
-	Settings *settings;
 	quint8 volume, volIni, volFin, volInc;
 	quint32 timeStepVolume, timeSleep, timeMaxVol;
 	bool enableVolGrad, enableSleep, enableAlarm, alarmActive;

@@ -194,7 +194,7 @@ void MainWindow::setNextAlarm(const QTime &time)
 
 void MainWindow::readSettings()
 {
-	settings = new Settings(this);
+	Settings *settings = new Settings(this);
 
 	setEnableAlarm(settings->isEnableAlarm());
 	enableVolGrad = settings->isEnableVolGrad();
@@ -205,19 +205,15 @@ void MainWindow::readSettings()
 	enableSleep = settings->isEnableSleep();
 	timeSleep = settings->getTimeSleep();
 
-	delete settings;
-
 	calcStepVolume(timeMaxVol);
 }
 
 void MainWindow::writeSettings()
 {
-	settings = new Settings(this);
+	Settings *settings = new Settings(this);
 
 	settings->setEnableAlarm(enableAlarm);
 	settings->writeSettings();
-
-	delete settings;
 }
 
 void MainWindow::playSong()
