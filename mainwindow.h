@@ -41,8 +41,7 @@ private:
 	quint8 volume, volIni, volFin, volInc;
 	quint32 timeStepVolume, timeSleep, timeMaxVol;
 	bool enableVolGrad, enableSleep, enableAlarm, alarmActive;
-	QString file, timeFormat;
-	QUrl urlFile;
+	QString timeFormat;
 	QDateTime timeLeft;
 
 	void calcStepVolume(const quint32 timeTotal);
