@@ -171,7 +171,9 @@ void MainWindow::on_BTNAlarms_clicked()
 
 void MainWindow::setFile(const QString file)
 {
-	QUrl urlFile = QUrl::fromLocalFile(file);
+	QUrl urlFile;
+
+	urlFile = QUrl::fromLocalFile(file);
 
 	listSongs->setPlaybackMode(QMediaPlaylist::Loop);
 	listSongs->clear();
@@ -250,16 +252,11 @@ void MainWindow::sleepSong()
 
 void MainWindow::readAlarmsSettings()
 {
-	QString date, file;
+	AlarmSettings settingsAlarms(this);
+	Alarm *next = settingsAlarms.getAlarm();
 
-	// Bug, falta crear el caso cuando no hay time guardado.
-	settingsAlarms.beginGroup("Alarms");
-	date = settingsAlarms.value("time").toString();
-	file = settingsAlarms.value("fileSong").toString();
-	settingsAlarms.endGroup();
-
-	setNextAlarm(QTime::fromString(date, "h:mm"));
-	setFile(file);
+	setNextAlarm(next->getTime());
+	setFile(next->getFile());
 }
 
 void MainWindow::on_CHKenableAlarm_clicked(bool checked)

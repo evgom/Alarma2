@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QFileDialog>
 #include <QSettings>
+#include "alarmsettings.h"
 
 namespace Ui {
 class AlarmsConfigDialog;
@@ -23,16 +24,14 @@ private slots:
 
 private:
 	Ui::AlarmsConfigDialog *ui;
-	QString file;
-	QTime *alarm;
-	QSettings settingsAlarms;
+	Alarm *alarm;
+	AlarmSettings *settingsAlarms;
 	void initVal();
 	void readAlarmsSettings();
 	void writeAlarmsSettings();
 
 signals:
-	void newAlarm(const QTime &time);
-	void newFile(const QString file);
+	void alarmUpdated();
 };
 
 #endif // ALARMSCONFIGDIALOG_H

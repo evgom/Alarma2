@@ -9,7 +9,6 @@
 #include <QTimer>
 #include <options.h>
 #include <alarmsconfigdialog.h>
-#include <QSettings>
 #include <QMap>
 #include <QMediaPlaylist>
 #include <dialogsure.h>
@@ -37,7 +36,6 @@ private:
 	QMediaPlayer *sound;
 	QMediaPlaylist *listSongs;
 	QTimer *timerVol, *timerDisplays, *timerGetTimes, *timerSleepSong;
-	QSettings settingsAlarms;
 	Settings *settings;
 	quint8 volume, volIni, volFin, volInc;
 	quint32 timeStepVolume, timeSleep, timeMaxVol;
@@ -50,7 +48,6 @@ private:
 	void stopSong();
 	void sleepSong();
 	void writeSettings();
-	void readAlarmsSettings();
 	void timeLeftNextAlarm();
 	void setTimeNow();
 	void checkAlarm();
@@ -76,6 +73,7 @@ private slots:
 	void on_BTNtest_clicked();
 	void initVal();
 	void readSettings();
+	void readAlarmsSettings();
 
 signals:
 	void mainHideChanged(bool);
