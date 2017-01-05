@@ -9,10 +9,6 @@ int main(int argc, char *argv[])
 	QCoreApplication::setOrganizationName("evgom");
 	QCoreApplication::setApplicationName("Alarma2");
 
-	//---------------------------------------------------
-	//	Crear Clase Alarms y Settings, para así escribir y borrar Alarmas
-	//---------------------------------------------------
-
 	MainWindow w;
 	w.show();
 
