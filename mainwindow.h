@@ -48,7 +48,6 @@ private:
 	void playSong();
 	void stopSong();
 	void sleepSong();
-	void readSettings();
 	void writeSettings();
 	void readAlarmsSettings();
 	void timeLeftNextAlarm();
@@ -70,12 +69,12 @@ private slots:
 	void on_BTNAlarms_clicked();
 	void setFile(const QString file);
 	void setNextAlarm(const QTime &time);
-	void reloadSettings();
 	void calcTimes();
 	void on_CHKenableAlarm_clicked(bool checked);
 	void on_BTNstop_clicked();
 	void on_BTNtest_clicked();
 	void initVal();
+	void readSettings();
 
 signals:
 	void mainHideChanged(bool);

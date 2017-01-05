@@ -12,7 +12,7 @@ Options::Options(QWidget *parent) :
 	readSettings();
 	iniValues();
 
-	connect(this, SIGNAL(settingsUpdated()), parent, SLOT(reloadSettings()));
+	connect(this, SIGNAL(settingsUpdated()), parent, SLOT(readSettings()));
 }
 
 Options::~Options()

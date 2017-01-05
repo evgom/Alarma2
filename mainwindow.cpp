@@ -46,9 +46,6 @@ void MainWindow::initVal()
 
 	readSettings();
 	readAlarmsSettings();
-	calcStepVolume(timeMaxVol);
-
-
 }
 
 void MainWindow::timeLeftNextAlarm()
@@ -191,12 +188,6 @@ void MainWindow::setNextAlarm(const QTime &time)
 	ui->LEnextAlarm->setText(nextAlarm->toString(timeFormat));
 }
 
-void MainWindow::reloadSettings()
-{
-	readSettings();
-	calcStepVolume(timeMaxVol);
-}
-
 void MainWindow::readSettings()
 {
 	settings = new Settings(this);
@@ -211,6 +202,8 @@ void MainWindow::readSettings()
 	timeSleep = settings->getTimeSleep();
 
 	delete settings;
+
+	calcStepVolume(timeMaxVol);
 }
 
 void MainWindow::writeSettings()
