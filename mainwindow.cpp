@@ -111,7 +111,11 @@ void MainWindow::setEnableAlarm(bool state)
 	if(state != enableAlarm) {
 		enableAlarm = state;
 		ui->CHKenableAlarm->setChecked(state);
-		qDebug() << "Alarma:" << state;
+		if (state)
+			qDebug() << "Alarma enabled";
+		else
+			qDebug() << "Alarma disabled";
+
 		emit enableAlarmChanged (enableAlarm);
 	}
 }
