@@ -4,6 +4,9 @@
 #include <QDialog>
 #include <QDebug>
 #include <settings.h>
+#include <QTime>
+
+#define formatTimer "m:ss"
 
 namespace Ui {
 class Options;
@@ -27,6 +30,8 @@ private:
 	void readSettings();
 	void writeSettings();
 	void readValuesUI();
+	qint32 timeToSecs(const QTime &time);
+	QTime secsToTime(const qint32 time);
 
 private slots:
 	void on_CHKSleep_toggled(bool checked);
