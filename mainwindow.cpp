@@ -155,12 +155,6 @@ void MainWindow::calcStepVolume(const quint32 timeTotal)
 	timeStepVolume = 1000 * timeTotal / numberSteps;
 }
 
-
-void MainWindow::on_BTNduerme_clicked()
-{
-	sleepSong();
-}
-
 void MainWindow::on_actionConfigurar_triggered()
 {
 	Options *op = new Options(this);
@@ -280,4 +274,9 @@ void MainWindow::on_BTNstop_clicked()
 void MainWindow::on_BTNtest_clicked()
 {
 	startAlarm();
+}
+
+void MainWindow::on_BTNsleep_clicked()
+{
+	sleepSong();
 }

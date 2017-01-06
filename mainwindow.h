@@ -62,7 +62,6 @@ public slots:
 private slots:
 	void updateDisplays();
 	void incVolume();
-	void on_BTNduerme_clicked();
 	void on_actionConfigurar_triggered();
 	void on_BTNAlarms_clicked();
 	void setFile(const QString file);
@@ -74,6 +73,7 @@ private slots:
 	void initVal();
 	void readSettings();
 	void readAlarmsSettings();
+	void on_BTNsleep_clicked();
 
 signals:
 	void mainHideChanged(bool);
