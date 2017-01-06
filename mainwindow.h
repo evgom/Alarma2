@@ -7,13 +7,13 @@
 #include <QDebug>
 #include <QMediaPlayer>
 #include <QTimer>
-#include <options.h>
-#include <alarmsconfigdialog.h>
+#include "options.h"
+#include "alarmsconfigdialog.h"
 #include <QMap>
 #include <QMediaPlaylist>
-#include <dialogsure.h>
-#include <systemtray.h>
-#include <settings.h>
+#include "dialogsure.h"
+#include "systemtray.h"
+#include "settings.h"
 #include <QtMath>
 
 namespace Ui {

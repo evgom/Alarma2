@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include <QDebug>
-#include <settings.h>
+#include "settings.h"
 #include <QTime>
 
 #define formatTimer "m:ss"
