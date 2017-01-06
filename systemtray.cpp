@@ -26,7 +26,11 @@ SystemTray::SystemTray(QObject *parent) : QSystemTrayIcon(parent)
 
 	connect(this, SIGNAL(closeMain()), parent, SLOT(close()));
 	connect(this, SIGNAL(toogleMainHide()), parent, SLOT(toogleMainHide()));
+	connect(parent, SIGNAL(alarmStartedStoped(bool)),
+			this, SLOT(msgAlarmStartedStoped(bool)));
 
+
+	connect(this, SIGNAL(messageClicked()), this, SLOT(slotDePrueba()));
 
 	show();
 }
@@ -64,14 +68,26 @@ void SystemTray::actionsSysTray(QSystemTrayIcon::ActivationReason e)
 	}
 }
 
-void SystemTray::msgCritical()
-{
-	showMessage("Mensaje de prueba", "Hola hola", QSystemTrayIcon::Critical, 5000);
-}
-
 // Implementación temporal. Parece que tiene que ver con closeevent.
 void SystemTray::closeProgram()
 {
 	deleteLater();
 	emit closeMain();
+}
+
+void SystemTray::msgAlarmStartedStoped(bool started)
+{
+	const qint32 timeMessage = 20000;
+
+	if(started)
+		showMessage(QApplication::applicationName(), "Alarma activada",
+					QSystemTrayIcon::Information, timeMessage);
+	else
+		showMessage(QApplication::applicationName(), "Alarma detenida",
+					QSystemTrayIcon::Warning, timeMessage);
+}
+
+void SystemTray::slotDePrueba()
+{
+	qDebug() << "Slot de Prueba";
 }

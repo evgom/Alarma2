@@ -4,6 +4,7 @@
 #include <QSystemTrayIcon>
 #include <QDebug>
 #include <QMenu>
+#include <QApplication>
 
 class SystemTray : public QSystemTrayIcon
 {
@@ -13,10 +14,11 @@ public:
 
 public slots:
 	void actionsSysTray(QSystemTrayIcon::ActivationReason e);
-	void msgCritical();
 
 private slots:
 	void closeProgram();
+	void msgAlarmStartedStoped(bool started);
+	void slotDePrueba();
 
 signals:
 	void closeMain();

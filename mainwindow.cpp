@@ -86,12 +86,18 @@ void MainWindow::checkAlarm()
 
 void MainWindow::startAlarm()
 {
+	if (sound->state() == QMediaPlayer::StoppedState)
+		emit alarmStartedStoped(true);
+
 	alarmActive = true;
 	playSong();
 }
 
 void MainWindow::stopAlarm()
 {
+	if (sound->state() == QMediaPlayer::PlayingState)
+		emit alarmStartedStoped(false);
+
 	alarmActive = false;
 	stopSong();
 }
