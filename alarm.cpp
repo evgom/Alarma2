@@ -6,10 +6,11 @@ Alarm::Alarm(QObject *parent) : QObject(parent)
 
 }
 
-Alarm::Alarm(const QString file, const QDate &date, const QTime &time, Qt::TimeSpec spec, QObject *parent)
+Alarm::Alarm(const QString file, const QDate &date, const QTime &time,
+			 Qt::TimeSpec spec, QObject *parent) : QObject(parent)
 {
 	this->file = file;
-	dateTime = new QDateTime(date, time);
+	dateTime = new QDateTime(date, time, spec);
 }
 
 Alarm::Alarm(const QString file, const QDateTime &other, QObject *parent) : QObject(parent)

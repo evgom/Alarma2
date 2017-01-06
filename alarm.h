@@ -11,7 +11,8 @@ class Alarm : public QObject
 	Q_OBJECT
 public:
 	explicit Alarm(QObject *parent = 0);
-	explicit Alarm(const QString file, const QDate &date, const QTime &time,Qt::TimeSpec spec = Qt::LocalTime, QObject *parent = 0);
+	explicit Alarm(const QString file, const QDate &date, const QTime &time,
+				   Qt::TimeSpec spec = Qt::LocalTime, QObject *parent = 0);
 	explicit Alarm(const QString file, const QDateTime &other, QObject *parent = 0);
 
 	enum Days {
