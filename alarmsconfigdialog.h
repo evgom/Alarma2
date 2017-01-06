@@ -29,6 +29,8 @@ private:
 	void initVal();
 	void readAlarmsSettings();
 	void writeAlarmsSettings();
+	void setCHKDays();
+	void CHKDaysToAlarm();
 
 signals:
 	void alarmUpdated();

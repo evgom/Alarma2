@@ -81,49 +81,49 @@
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="0" column="1">
-        <widget class="QCheckBox" name="checkBox_8">
+        <widget class="QCheckBox" name="CHKtuesday">
          <property name="text">
           <string>Martes</string>
          </property>
         </widget>
        </item>
        <item row="0" column="2">
-        <widget class="QCheckBox" name="checkBox_9">
+        <widget class="QCheckBox" name="CHKwednesday">
          <property name="text">
           <string>Miércoles</string>
          </property>
         </widget>
        </item>
        <item row="0" column="0">
-        <widget class="QCheckBox" name="checkBox_10">
+        <widget class="QCheckBox" name="CHKmonday">
          <property name="text">
           <string>Lunes</string>
          </property>
         </widget>
        </item>
        <item row="0" column="3">
-        <widget class="QCheckBox" name="checkBox_11">
+        <widget class="QCheckBox" name="CHKthursday">
          <property name="text">
           <string>Jueves</string>
          </property>
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QCheckBox" name="checkBox_12">
+        <widget class="QCheckBox" name="CHKfriday">
          <property name="text">
           <string>Viernes</string>
          </property>
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QCheckBox" name="checkBox_13">
+        <widget class="QCheckBox" name="CHKsaturday">
          <property name="text">
           <string>Sábado</string>
          </property>
         </widget>
        </item>
        <item row="1" column="2">
-        <widget class="QCheckBox" name="checkBox_14">
+        <widget class="QCheckBox" name="CHKsunday">
          <property name="text">
           <string>Domingo</string>
          </property>

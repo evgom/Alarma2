@@ -259,6 +259,7 @@ void MainWindow::readAlarmsSettings()
 
 	setNextAlarm(next->getTime());
 	setFile(next->getFile());
+	days = next->getDays();
 }
 
 void MainWindow::on_CHKenableAlarm_clicked(bool checked)

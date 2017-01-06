@@ -22,6 +22,7 @@ private:
 	QString destination;
 	Alarm *alarm;
 	void readAlarmSettings();
+	QSet<int8_t> days;
 
 signals:
 

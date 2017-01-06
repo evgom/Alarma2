@@ -41,6 +41,7 @@ private:
 	bool enableVolGrad, enableSleep, enableAlarm, alarmActive;
 	QString timeFormat;
 	QDateTime timeLeft;
+	QSet<int8_t> days;
 
 	void calcStepVolume(const quint32 timeTotal);
 	void playSong();
