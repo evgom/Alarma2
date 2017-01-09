@@ -8,8 +8,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->setupUi(this);
 	timeFormat = "h:mm:ss ap";
 
-	timeNow = new QTime();
-	nextAlarm = new QTime();
+	timeNow = new QDateTime();
+	nextAlarm = new Alarm(this);
 	sound = new QMediaPlayer(this);
 	listSongs = new QMediaPlaylist(this);
 	systemTrayIcon = new SystemTray(this);
@@ -51,15 +51,12 @@ void MainWindow::initVal()
 void MainWindow::timeLeftNextAlarm()
 {
 	// Calcula cuanto tiempo ha pasado
-	qint32 msecs = timeNow->msecsTo(*nextAlarm);
-	qint32 secsTime;
+	qint64 secsTime = timeNow->secsTo(nextAlarm->getDateTime());
 
 	// Si la fecha pasó hace un ajuste.
-	if (timeNow->operator <(*nextAlarm))
-		secsTime = msecs / 1000;
-	else
+	if (*timeNow > nextAlarm->getDateTime())
 		// 86400000 es el numero de segundos en el día
-		secsTime = 86400000 + (msecs / 1000);
+		secsTime += 86400000;
 
 	// Es necesario para evitar el desfase del huso horario
 	timeLeft = QDateTime::fromTime_t(secsTime).toUTC();
@@ -74,12 +71,12 @@ void MainWindow::calcTimes()
 
 void MainWindow::setTimeNow()
 {
-	*timeNow = QTime::currentTime();
+	*timeNow = QDateTime::currentDateTime();
 }
 
 void MainWindow::checkAlarm()
 {
-	qint32 timeDiff = qAbs(timeNow->msecsTo(*nextAlarm));
+	qint64 timeDiff = qAbs(timeNow->msecsTo(nextAlarm->getDateTime()));
 	if (enableAlarm && ( timeDiff < 1000 ) && (ui->LEnextAlarm->text() != "") )
 		startAlarm();
 }
@@ -100,6 +97,36 @@ void MainWindow::stopAlarm()
 
 	alarmActive = false;
 	stopSong();
+}
+
+void MainWindow::calcDateNextAlarm()
+{
+	QDate dateAlarm(QDate::currentDate());
+	QDate today(QDate::currentDate());
+	qint8 daysToAdd;
+
+	QSet<int8_t> days;
+	days = nextAlarm->getDays();
+
+	QList<int8_t> daysList(days.toList());
+	std::sort(daysList.begin(), daysList.end());
+	QListIterator<int8_t> i(daysList);
+
+	while(true) {
+		daysToAdd = i.next() - today.dayOfWeek();
+
+		if (daysToAdd >= 0)
+			break;
+
+		// Si la fecha es la siguiente semana, hace un ajuste.
+		if (!i.hasNext()) {
+			daysToAdd = daysList.at(0) - today.dayOfWeek() + 7;
+			break;
+		}
+	}
+
+	dateAlarm = dateAlarm.addDays(daysToAdd);
+	nextAlarm->setDate(dateAlarm);
 }
 
 void MainWindow::toogleMainHide()
@@ -149,8 +176,22 @@ void MainWindow::updateDisplays()
 {
 	ui->LEtime->setText(timeNow->toString(timeFormat));
 
-	if (enableAlarm)
-		ui->LEleftAlarm->setText(timeLeft.toString("h:mm:ss"));
+	if (enableAlarm) {
+		QString stringTimeLeft = "";
+		qint64 daysLeft = timeNow->daysTo(nextAlarm->getDateTime());
+
+		if (nextAlarm->getTime() < timeNow->time())
+			daysLeft--;
+
+		if (daysLeft != 0)
+			stringTimeLeft = QString::number(daysLeft) + " días ";
+		if (daysLeft == -1)
+			stringTimeLeft = QString::number(6) + " días ";
+
+
+		stringTimeLeft += timeLeft.toString("h:mm:ss");
+		ui->LEleftAlarm->setText(stringTimeLeft);
+	}
 	else
 		ui->LEleftAlarm->setText("");
 }
@@ -189,11 +230,14 @@ void MainWindow::setFile(const QString file)
 	ui->LEsong->setText(urlFile.fileName());
 }
 
-void MainWindow::setNextAlarm(const QTime &time)
+void MainWindow::setNextAlarm(const Alarm &newAlarm)
 {
-	// Posible leak de memoria
-	*nextAlarm = time;
-	ui->LEnextAlarm->setText(nextAlarm->toString(timeFormat));
+	nextAlarm->setAlarm(newAlarm);
+	// Calcular la fecha para la siguiente alarma con respecto a los días dados
+	calcDateNextAlarm();
+
+	ui->LEnextAlarm->setText(nextAlarm->getTime().toString(timeFormat));
+	ui->LEday->setText(QDate::longDayName(nextAlarm->getDate().dayOfWeek()));
 }
 
 void MainWindow::readSettings()
@@ -255,11 +299,10 @@ void MainWindow::sleepSong()
 void MainWindow::readAlarmsSettings()
 {
 	AlarmSettings settingsAlarms(this);
-	Alarm *next = settingsAlarms.getAlarm();
+	setNextAlarm(*settingsAlarms.getAlarm());
 
-	setNextAlarm(next->getTime());
-	setFile(next->getFile());
-	days = next->getDays();
+	setFile(nextAlarm->getFile());
+	//days = next->getDays();
 }
 
 void MainWindow::on_CHKenableAlarm_clicked(bool checked)

@@ -33,7 +33,8 @@ public:
 
 private:
 	Ui::MainWindow *ui;
-	QTime *timeNow, *nextAlarm;
+	QDateTime *timeNow;
+	Alarm *nextAlarm;
 	QMediaPlayer *sound;
 	QMediaPlaylist *listSongs;
 	QTimer *timerVol, *timerDisplays, *timerGetTimes, *timerSleepSong;
@@ -42,7 +43,6 @@ private:
 	bool enableVolGrad, enableSleep, enableAlarm, alarmActive;
 	QString timeFormat;
 	QDateTime timeLeft;
-	QSet<int8_t> days;
 
 	void calcStepVolume(const quint32 timeTotal);
 	void playSong();
@@ -54,6 +54,7 @@ private:
 	void checkAlarm();
 	void startAlarm();
 	void stopAlarm();
+	void calcDateNextAlarm();
 
 public slots:
 	void toogleMainHide();
@@ -66,7 +67,7 @@ private slots:
 	void on_actionConfigurar_triggered();
 	void on_BTNAlarms_clicked();
 	void setFile(const QString file);
-	void setNextAlarm(const QTime &time);
+	void setNextAlarm(const Alarm &newAlarm);
 	void calcTimes();
 	void on_CHKenableAlarm_clicked(bool checked);
 	void on_BTNstop_clicked();
