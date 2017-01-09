@@ -2,8 +2,9 @@
 
 Alarm::Alarm(QObject *parent) : QObject(parent)
 {
-	dateTime = new QDateTime();
-
+	QDate date(2000, 1, 1);
+	QTime time(0, 0);
+	dateTime = new QDateTime(date, time);
 }
 
 Alarm::Alarm(const QString file, const QDate &date, const QTime &time,
