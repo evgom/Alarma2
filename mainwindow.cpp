@@ -286,3 +286,13 @@ void MainWindow::on_BTNsleep_clicked()
 {
 	sleepSong();
 }
+
+void MainWindow::on_actionAcerca_de_Qt_triggered()
+{
+	QMessageBox::aboutQt(this, "Acerca de Qt");
+}
+
+void MainWindow::on_actionAcerca_de_triggered()
+{
+	QMessageBox::about(this, "Acerca de", "Texto");
+}

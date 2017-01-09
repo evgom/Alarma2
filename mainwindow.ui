@@ -243,6 +243,7 @@
      <string>Ay&amp;uda</string>
     </property>
     <addaction name="actionAcerca_de"/>
+    <addaction name="actionAcerca_de_Qt"/>
    </widget>
    <addaction name="menuArchivo"/>
    <addaction name="menuPreferencias"/>
@@ -275,6 +276,11 @@
   <action name="actionAlarmas">
    <property name="text">
     <string>Alarmas</string>
+   </property>
+  </action>
+  <action name="actionAcerca_de_Qt">
+   <property name="text">
+    <string>Acerca de Qt</string>
    </property>
   </action>
  </widget>

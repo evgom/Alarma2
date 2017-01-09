@@ -15,6 +15,7 @@
 #include "systemtray.h"
 #include "settings.h"
 #include <QtMath>
+#include <QMessageBox>
 
 namespace Ui {
 class MainWindow;
@@ -74,6 +75,10 @@ private slots:
 	void readSettings();
 	void readAlarmsSettings();
 	void on_BTNsleep_clicked();
+
+	void on_actionAcerca_de_Qt_triggered();
+
+	void on_actionAcerca_de_triggered();
 
 signals:
 	void mainHideChanged(bool);
