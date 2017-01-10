@@ -13,6 +13,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	sound = new QMediaPlayer(this);
 	listSongs = new QMediaPlaylist(this);
 	systemTrayIcon = new SystemTray(this);
+	op = new Options(this);
+	al = new AlarmsConfigDialog(this);
 
 	// Timers
 	timerDisplays = new QTimer(this);
@@ -218,13 +220,11 @@ void MainWindow::calcStepVolume(const quint32 timeTotal)
 
 void MainWindow::on_actionConfigurar_triggered()
 {
-	Options *op = new Options(this);
 	op->show();
 }
 
 void MainWindow::on_BTNAlarms_clicked()
 {
-	AlarmsConfigDialog *al = new AlarmsConfigDialog(this);
 	al->show();
 }
 

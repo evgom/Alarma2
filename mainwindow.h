@@ -45,6 +45,8 @@ private:
 	QString timeFormat;
 	QDateTime timeLeft;
 	bool closeToTray;
+	Options *op;
+	AlarmsConfigDialog *al;
 
 	void calcStepVolume(const quint32 timeTotal);
 	void playSong();
