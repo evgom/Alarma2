@@ -13,18 +13,17 @@ SystemTray::SystemTray(QObject *parent) : QSystemTrayIcon(parent)
 
 	QMenu *menu = new QMenu(qobject_cast<QWidget*>(parent) );
 	menu->insertAction(0, actionAlarm);
-	menu->addAction("Salir", this, SLOT(closeProgram()));
+	menu->addAction("Salir", parent, SLOT(closeApp()));
 	setContextMenu(menu);
 
 	connect(actionAlarm, SIGNAL(toggled(bool)), parent, SLOT(setEnableAlarm(bool)));
 	connect(parent, SIGNAL(enableAlarmChanged(bool)), actionAlarm, SLOT(setChecked(bool)));
 	//Es probable que se necesite un QAction para el checkbox de la venta principal.
 
-
+	connect(this, SIGNAL(closeProgram()), parent, SLOT(close()));
 	connect(this, SIGNAL(activated(QSystemTrayIcon::ActivationReason) ), this,
 			SLOT(actionsSysTray(QSystemTrayIcon::ActivationReason)));
 
-	connect(this, SIGNAL(closeMain()), parent, SLOT(close()));
 	connect(this, SIGNAL(toogleMainHide()), parent, SLOT(toogleMainHide()));
 	connect(parent, SIGNAL(alarmStartedStoped(bool)),
 			this, SLOT(msgAlarmStartedStoped(bool)));
@@ -46,7 +45,7 @@ void SystemTray::actionsSysTray(QSystemTrayIcon::ActivationReason e)
 
 	case QSystemTrayIcon::Context:
 		qDebug() << "Context";
-		closeProgram();
+		//closeProgram();
 		break;
 
 	case QSystemTrayIcon::DoubleClick:
@@ -66,13 +65,6 @@ void SystemTray::actionsSysTray(QSystemTrayIcon::ActivationReason e)
 		qDebug() << "Default" << e;
 		break;
 	}
-}
-
-// Implementación temporal. Parece que tiene que ver con closeevent.
-void SystemTray::closeProgram()
-{
-	deleteLater();
-	emit closeMain();
 }
 
 void SystemTray::msgAlarmStartedStoped(bool started)

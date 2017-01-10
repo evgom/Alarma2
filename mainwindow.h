@@ -16,6 +16,7 @@
 #include "settings.h"
 #include <QtMath>
 #include <QMessageBox>
+#include <QCloseEvent>
 
 namespace Ui {
 class MainWindow;
@@ -43,6 +44,7 @@ private:
 	bool enableVolGrad, enableSleep, enableAlarm, alarmActive;
 	QString timeFormat;
 	QDateTime timeLeft;
+	bool closeToTray;
 
 	void calcStepVolume(const quint32 timeTotal);
 	void playSong();
@@ -60,6 +62,10 @@ public slots:
 	void toogleMainHide();
 	void setEnableAlarm(bool);
 	void toogleEnableAlarm();
+	void closeApp();
+
+protected:
+	void closeEvent(QCloseEvent *event);
 
 private slots:
 	void updateDisplays();
@@ -80,6 +86,8 @@ private slots:
 	void on_actionAcerca_de_Qt_triggered();
 
 	void on_actionAcerca_de_triggered();
+
+	void on_actionSalir_triggered();
 
 signals:
 	void mainHideChanged(bool);

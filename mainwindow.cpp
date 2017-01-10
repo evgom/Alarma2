@@ -40,6 +40,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::initVal()
 {
+	closeToTray = true;
 	timerSleepSong->setSingleShot(true);
 	timerSleepSong->stop();
 	stopAlarm();
@@ -156,6 +157,19 @@ void MainWindow::setEnableAlarm(bool state)
 void MainWindow::toogleEnableAlarm()
 {
 	setEnableAlarm(!enableAlarm);
+}
+
+void MainWindow::closeApp()
+{
+	qApp->quit();
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+	if (closeToTray)
+		toogleMainHide();
+	else
+		closeApp();
 }
 
 void MainWindow::incVolume()
@@ -338,4 +352,9 @@ void MainWindow::on_actionAcerca_de_Qt_triggered()
 void MainWindow::on_actionAcerca_de_triggered()
 {
 	QMessageBox::about(this, "Acerca de", "Texto");
+}
+
+void MainWindow::on_actionSalir_triggered()
+{
+	closeApp();
 }

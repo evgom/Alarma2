@@ -16,13 +16,12 @@ public slots:
 	void actionsSysTray(QSystemTrayIcon::ActivationReason e);
 
 private slots:
-	void closeProgram();
 	void msgAlarmStartedStoped(bool started);
 	void slotDePrueba();
 
 signals:
-	void closeMain();
 	void toogleMainHide();
+	void closeProgram();
 };
 
 #endif // SYSTEMTRAY_H
