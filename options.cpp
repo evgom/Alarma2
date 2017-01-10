@@ -22,8 +22,11 @@ Options::~Options()
 
 void Options::iniValues()
 {
-	QStringList list;
+	valiVol= new QIntValidator(0, 100, this);
+	valiVolInc = new QIntValidator(1, 100, this);
+	validConfig = false;
 
+	QStringList list;
 	for(int i = 0; i <= 100; i+=5)
 		list.append(QString::number(i));
 
@@ -48,6 +51,12 @@ void Options::iniValues()
 	ui->TEtimeSleep->setDisplayFormat(formatTimer);
 	ui->TEtimeSleep->setToolTip("Minutos:Segundos");
 
+
+	// Validators, only for range
+	ui->CBvolIni->setValidator(valiVol);
+	ui->CBvolFin->setValidator(valiVol);
+	ui->CBvolInc->setValidator(valiVolInc);
+
 	Options::on_CHKSleep_toggled(enableSleep);
 	Options::on_CHKvolGradual_toggled(enableVolGrad);
 }
@@ -65,26 +74,26 @@ void Options::readSettings()
 
 void Options::writeSettings()
 {
-	settings->setEnableVolGrad(enableVolGrad);
-	settings->setVolIni(volIni);
-	settings->setVolFin(volFin);
-	settings->setVolInc(volInc);
-	settings->setTimeMaxVol(timeMaxVol);
-	settings->setEnableSleep(enableSleep);
-	settings->setTimeSleep(timeSleep);
+	settings->setEnableVolGrad(newEnableSleep);
+	settings->setVolIni(newVolIni);
+	settings->setVolFin(newVolFin);
+	settings->setVolInc(newVolInc);
+	settings->setTimeMaxVol(newTimeMaxVol);
+	settings->setEnableSleep(newEnableSleep);
+	settings->setTimeSleep(newTimeSleep);
 
 	settings->writeSettings();
 }
 
 void Options::readValuesUI()
 {
-	enableVolGrad = ui->CHKvolGradual->isChecked();
-	volIni = ui->CBvolIni->currentText().toInt();
-	volFin = ui->CBvolFin->currentText().toInt();
-	volInc = ui->CBvolInc->currentText().toInt();
-	timeMaxVol = timeToSecs(ui->TEtimeMaxVol->time());
-	enableSleep = ui->CHKSleep->isChecked();
-	timeSleep = timeToSecs(ui->TEtimeSleep->time());
+	newEnableSleep = ui->CHKvolGradual->isChecked();
+	newVolIni = ui->CBvolIni->currentText().toInt();
+	newVolFin = ui->CBvolFin->currentText().toInt();
+	newVolInc = ui->CBvolInc->currentText().toInt();
+	newTimeMaxVol = timeToSecs(ui->TEtimeMaxVol->time());
+	newEnableSleep = ui->CHKSleep->isChecked();
+	newTimeSleep = timeToSecs(ui->TEtimeSleep->time());
 }
 
 qint32 Options::timeToSecs(const QTime &time)
@@ -95,6 +104,49 @@ qint32 Options::timeToSecs(const QTime &time)
 QTime Options::secsToTime(const qint32 time)
 {
 	return QTime(0, 0).addSecs(time);
+}
+
+void Options::checkConfig()
+{
+	readValuesUI();
+
+	int pos = 0;
+	QString newVolIniS = QString::number(newVolIni);
+	QString newVolFinS = QString::number(newVolFin);
+	QString newVolIncS = QString::number(newVolInc);
+
+	calcValidates();
+
+	validConfig = true;
+	ui->buttonBox->buttons().at(0)->setEnabled(true);
+	ui->CBvolIni->setStyleSheet("");
+	ui->CBvolFin->setStyleSheet("");
+	ui->CBvolInc->setStyleSheet("");
+
+	QString redStyle = "background-color: #da4453";
+
+	if( !(vVolIni->validate(newVolIniS, pos) == QValidator::Acceptable) ) {
+		ui->CBvolIni->setStyleSheet(redStyle);
+		validConfig = false;
+		ui->buttonBox->buttons().at(0)->setEnabled(false);
+	}
+	if( !(vVolFin->validate(newVolFinS, pos) == QValidator::Acceptable) ) {
+		ui->CBvolFin->setStyleSheet(redStyle);
+		validConfig = false;
+		ui->buttonBox->buttons().at(0)->setEnabled(false);
+	}
+	if( !(valiVolInc->validate(newVolIncS, pos) == QValidator::Acceptable) ) {
+		ui->CBvolInc->setStyleSheet(redStyle);
+		validConfig = false;
+		ui->buttonBox->buttons().at(0)->setEnabled(false);
+	}
+}
+
+// Real Validators
+void Options::calcValidates()
+{
+	vVolIni = new QIntValidator(0, newVolFin - 1);
+	vVolFin = new QIntValidator(newVolIni + 1, 100);
 }
 
 void Options::on_CHKSleep_toggled(bool checked)
@@ -109,18 +161,32 @@ void Options::on_CHKvolGradual_toggled(bool checked)
 	ui->TEtimeMaxVol->setEnabled(checked);
 }
 
-void Options::on_buttonBox_accepted()
+void Options::on_CBvolIni_editTextChanged(const QString &arg1)
 {
-	readValuesUI();
-	writeSettings();
-	emit settingsUpdated();
+	checkConfig();
 }
 
-// Implementar bien esta parte. Parece que QValidator es una buena opción
-void Options::on_CBvolIni_currentTextChanged(const QString &arg1)
+void Options::on_CBvolFin_editTextChanged(const QString &arg1)
 {
-	QRegExp digit("\\d+");
+	checkConfig();
+}
 
-	if (!digit.exactMatch(arg1))
-		ui->label->setToolTip("Sólo numeros");
+void Options::on_CBvolInc_editTextChanged(const QString &arg1)
+{
+	checkConfig();
+}
+
+void Options::on_buttonBox_accepted()
+{
+	checkConfig();
+
+	if (validConfig)
+	{
+		writeSettings();
+		emit settingsUpdated();
+
+		/*this->close();
+		deleteLater();
+		emit accepted();*/
+	}
 }
