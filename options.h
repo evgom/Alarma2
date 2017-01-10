@@ -37,7 +37,6 @@ private:
 	bool newEnableVolGrad, newEnableSleep;
 	quint8 newVolIni, newVolFin, newVolInc;
 	quint32 newTimeMaxVol, newTimeSleep;
-	bool validConfig;
 
 	void checkConfig();
 	void calcValidates();

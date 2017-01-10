@@ -24,7 +24,6 @@ void Options::iniValues()
 {
 	valiVol= new QIntValidator(0, 100, this);
 	valiVolInc = new QIntValidator(1, 100, this);
-	validConfig = false;
 
 	QStringList list;
 	for(int i = 0; i <= 100; i+=5)
@@ -98,7 +97,7 @@ void Options::readValuesUI()
 
 qint32 Options::timeToSecs(const QTime &time)
 {
-	return QTime(0,0).secsTo(time);
+	return QTime(0, 0).secsTo(time);
 }
 
 QTime Options::secsToTime(const qint32 time)
@@ -117,7 +116,6 @@ void Options::checkConfig()
 
 	calcValidates();
 
-	validConfig = true;
 	ui->buttonBox->buttons().at(0)->setEnabled(true);
 	ui->CBvolIni->setStyleSheet("");
 	ui->CBvolFin->setStyleSheet("");
@@ -127,17 +125,14 @@ void Options::checkConfig()
 
 	if( !(vVolIni->validate(newVolIniS, pos) == QValidator::Acceptable) ) {
 		ui->CBvolIni->setStyleSheet(redStyle);
-		validConfig = false;
 		ui->buttonBox->buttons().at(0)->setEnabled(false);
 	}
 	if( !(vVolFin->validate(newVolFinS, pos) == QValidator::Acceptable) ) {
 		ui->CBvolFin->setStyleSheet(redStyle);
-		validConfig = false;
 		ui->buttonBox->buttons().at(0)->setEnabled(false);
 	}
 	if( !(valiVolInc->validate(newVolIncS, pos) == QValidator::Acceptable) ) {
 		ui->CBvolInc->setStyleSheet(redStyle);
-		validConfig = false;
 		ui->buttonBox->buttons().at(0)->setEnabled(false);
 	}
 }
@@ -180,13 +175,10 @@ void Options::on_buttonBox_accepted()
 {
 	checkConfig();
 
-	if (validConfig)
-	{
-		writeSettings();
-		emit settingsUpdated();
+	writeSettings();
+	emit settingsUpdated();
 
-		/*this->close();
-		deleteLater();
-		emit accepted();*/
-	}
+	/*this->close();
+	deleteLater();
+	emit accepted();*/
 }
