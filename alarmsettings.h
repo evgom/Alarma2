@@ -13,6 +13,7 @@ class AlarmSettings : public QObject
 	Q_OBJECT
 public:
 	explicit AlarmSettings(QObject *parent = 0);
+
 	Alarm* getAlarm();
 	void setAlarm(const Alarm &newAlarm);
 	void writeAlarmSettings();

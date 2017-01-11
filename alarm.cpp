@@ -20,6 +20,11 @@ Alarm::Alarm(const QString file, const QDateTime &other, QObject *parent) : QObj
 	dateTime = new QDateTime(other);
 }
 
+Alarm::~Alarm()
+{
+	delete dateTime;
+}
+
 void Alarm::setDateTime(const QDateTime &dateTime)
 {
 	*this->dateTime = dateTime;

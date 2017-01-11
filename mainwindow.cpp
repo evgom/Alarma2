@@ -15,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	systemTrayIcon = new SystemTray(this);
 	op = new Options(this);
 	al = new AlarmsConfigDialog(this);
+	sure = new DialogSure(this);
 
 	// Timers
 	timerDisplays = new QTimer(this);
@@ -256,26 +257,26 @@ void MainWindow::setNextAlarm(const Alarm &newAlarm)
 
 void MainWindow::readSettings()
 {
-	Settings *settings = new Settings(this);
+	Settings settings(this);
 
-	setEnableAlarm(settings->isEnableAlarm());
-	enableVolGrad = settings->isEnableVolGrad();
-	volIni = settings->getVolIni();
-	volFin = settings->getVolFin();
-	volInc = settings->getVolInc();
-	timeMaxVol = settings->getTimeMaxVol();
-	enableSleep = settings->isEnableSleep();
-	timeSleep = settings->getTimeSleep();
+	setEnableAlarm(settings.isEnableAlarm());
+	enableVolGrad = settings.isEnableVolGrad();
+	volIni = settings.getVolIni();
+	volFin = settings.getVolFin();
+	volInc = settings.getVolInc();
+	timeMaxVol = settings.getTimeMaxVol();
+	enableSleep = settings.isEnableSleep();
+	timeSleep = settings.getTimeSleep();
 
 	calcStepVolume(timeMaxVol);
 }
 
 void MainWindow::writeSettings()
 {
-	Settings *settings = new Settings(this);
+	Settings settings(this);
 
-	settings->setEnableAlarm(enableAlarm);
-	settings->writeSettings();
+	settings.setEnableAlarm(enableAlarm);
+	settings.writeSettings();
 }
 
 void MainWindow::playSong()
@@ -316,7 +317,6 @@ void MainWindow::readAlarmsSettings()
 	setNextAlarm(*settingsAlarms.getAlarm());
 
 	setFile(nextAlarm->getFile());
-	//days = next->getDays();
 }
 
 void MainWindow::on_CHKenableAlarm_clicked(bool checked)
@@ -328,7 +328,6 @@ void MainWindow::on_BTNstop_clicked()
 {
 	if( alarmActive || (sound->state() == QMediaPlayer::PlayingState) )
 	{
-		DialogSure *sure = new DialogSure(this);
 		sure->setWindowTitle("¿Detener Alarma?");
 		sure->show();
 	}
