@@ -10,7 +10,7 @@ public:
 	explicit Settings(QObject *parent = 0);
 
 private:
-	bool enableAlarm, enableVolGrad, enableSleep;
+	bool enableAlarm, enableVolGrad, enableSleep, closeToTray;
 	quint8 volIni, volFin, volInc;
 	quint32 timeMaxVol, timeSleep;
 
@@ -19,6 +19,7 @@ public:
 
 public slots:
 	bool isEnableAlarm();
+	bool isCloseToTray();
 	bool isEnableVolGrad();
 	bool isEnableSleep();
 	quint8 getVolIni();
@@ -28,6 +29,7 @@ public slots:
 	quint32 getTimeSleep();
 
 	void setEnableAlarm(bool value);
+	void setCloseToTray(bool value);
 	void setEnableVolGrad(bool value);
 	void setEnableSleep(bool value);
 	void setVolIni(quint8 value);

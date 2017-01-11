@@ -9,6 +9,7 @@ Settings::Settings(QObject *parent) : QSettings(parent)
 void Settings::readSettings()
 {
 	enableAlarm = value("enableAlarm", false).toBool();
+	closeToTray = value("closeToTray", true).toBool();
 
 	beginGroup("Volume");
 	enableVolGrad = value("volGradual", true).toBool();
@@ -27,6 +28,7 @@ void Settings::readSettings()
 void Settings::writeSettings()
 {
 	setValue("enableAlarm", enableAlarm);
+	setValue("closeToTray", closeToTray);
 
 	beginGroup("Volume");
 	setValue("volGradual", enableVolGrad);
@@ -45,6 +47,11 @@ void Settings::writeSettings()
 bool Settings::isEnableAlarm()
 {
 	return enableAlarm;
+}
+
+bool Settings::isCloseToTray()
+{
+	return closeToTray;
 }
 
 bool Settings::isEnableVolGrad()
@@ -85,6 +92,11 @@ quint32 Settings::getTimeSleep()
 void Settings::setEnableAlarm(bool value)
 {
 	enableAlarm = value;
+}
+
+void Settings::setCloseToTray(bool value)
+{
+	closeToTray = value;
 }
 
 void Settings::setEnableVolGrad(bool value)

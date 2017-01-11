@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>274</width>
-    <height>384</height>
+    <height>400</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -197,6 +197,13 @@
       </spacer>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="CHKcloseToTray">
+     <property name="text">
+      <string>Cerrar a la bandeja de sistema</string>
+     </property>
+    </widget>
    </item>
    <item>
     <spacer name="verticalSpacer">

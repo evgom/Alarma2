@@ -23,7 +23,7 @@ public:
 
 private:
 	Ui::Options *ui;
-	bool enableVolGrad, enableSleep;
+	bool enableVolGrad, enableSleep, closeToTray;
 	quint8 volIni, volFin, volInc;
 	quint32 timeMaxVol, timeSleep;
 	Settings *settings;
@@ -34,7 +34,7 @@ private:
 	qint32 timeToSecs(const QTime &time);
 	QTime secsToTime(const qint32 time);
 	QIntValidator *valiVol, *valiVolInc, *vVolIni, *vVolFin;
-	bool newEnableVolGrad, newEnableSleep;
+	bool newEnableVolGrad, newEnableSleep, newCloseToTray;
 	quint8 newVolIni, newVolFin, newVolInc;
 	quint32 newTimeMaxVol, newTimeSleep;
 

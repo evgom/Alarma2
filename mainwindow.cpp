@@ -43,7 +43,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::initVal()
 {
-	closeToTray = true;
 	timerSleepSong->setSingleShot(true);
 	timerSleepSong->stop();
 	stopAlarm();
@@ -261,6 +260,7 @@ void MainWindow::readSettings()
 
 	setEnableAlarm(settings.isEnableAlarm());
 	enableVolGrad = settings.isEnableVolGrad();
+	closeToTray = settings.isCloseToTray();
 	volIni = settings.getVolIni();
 	volFin = settings.getVolFin();
 	volInc = settings.getVolInc();

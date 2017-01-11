@@ -41,6 +41,7 @@ void Options::iniValues()
 	ui->TEtimeSleep->setTime(secsToTime(timeSleep));
 	ui->CHKSleep->setChecked(enableSleep);
 	ui->CHKvolGradual->setChecked(enableVolGrad);
+	ui->CHKcloseToTray->setChecked(closeToTray);
 
 	// Set widgets settings
 	ui->TEtimeMaxVol->setAccelerated(true);
@@ -63,6 +64,7 @@ void Options::iniValues()
 void Options::readSettings()
 {
 	enableVolGrad = settings->isEnableVolGrad();
+	closeToTray = settings->isCloseToTray();
 	volIni = settings->getVolIni();
 	volFin = settings->getVolFin();
 	volInc = settings->getVolInc();
@@ -74,6 +76,7 @@ void Options::readSettings()
 void Options::writeSettings()
 {
 	settings->setEnableVolGrad(newEnableSleep);
+	settings->setCloseToTray(newCloseToTray);
 	settings->setVolIni(newVolIni);
 	settings->setVolFin(newVolFin);
 	settings->setVolInc(newVolInc);
@@ -87,6 +90,7 @@ void Options::writeSettings()
 void Options::readValuesUI()
 {
 	newEnableSleep = ui->CHKvolGradual->isChecked();
+	newCloseToTray = ui->CHKcloseToTray->isChecked();
 	newVolIni = ui->CBvolIni->currentText().toInt();
 	newVolFin = ui->CBvolFin->currentText().toInt();
 	newVolInc = ui->CBvolInc->currentText().toInt();
