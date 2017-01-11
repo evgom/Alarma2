@@ -74,6 +74,7 @@ void MainWindow::calcTimes()
 
 void MainWindow::setTimeNow()
 {
+	// leak?
 	*timeNow = QDateTime::currentDateTime();
 }
 
@@ -233,14 +234,15 @@ void MainWindow::setFile(const QString file)
 	QFileInfo checkFile(file);
 	QUrl urlFile;
 
-	if (checkFile.exists() && checkFile.isFile())
+	if (checkFile.exists() && checkFile.isFile()){
 		urlFile = QUrl::fromLocalFile(file);
 
-	listSongs->setPlaybackMode(QMediaPlaylist::Loop);
-	listSongs->clear();
-	listSongs->addMedia(urlFile);
+		listSongs->setPlaybackMode(QMediaPlaylist::Loop);
+		listSongs->clear();
+		listSongs->addMedia(urlFile);
 
-	sound->setPlaylist(listSongs);
+		sound->setPlaylist(listSongs);
+	}
 	ui->LEsong->setText(urlFile.fileName());
 }
 
@@ -281,7 +283,7 @@ void MainWindow::writeSettings()
 
 void MainWindow::playSong()
 {
-	if (sound->mediaStatus() == QMediaPlayer::LoadedMedia) {
+	if (sound->isAudioAvailable()) {
 		volume = volIni;
 		sound->setVolume(volume);
 
