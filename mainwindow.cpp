@@ -5,6 +5,9 @@ MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
 	ui(new Ui::MainWindow)
 {
+	// Ensure working directory is home
+	QDir::setCurrent(QDir::homePath());
+
 	ui->setupUi(this);
 	timeFormat = "h:mm:ss ap";
 
