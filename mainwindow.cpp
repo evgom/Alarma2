@@ -74,7 +74,6 @@ void MainWindow::calcTimes()
 
 void MainWindow::setTimeNow()
 {
-	// leak?
 	*timeNow = QDateTime::currentDateTime();
 }
 
