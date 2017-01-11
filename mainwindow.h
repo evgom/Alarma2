@@ -47,6 +47,7 @@ private:
 	bool closeToTray;
 	Options *op;
 	AlarmsConfigDialog *al;
+	DialogSure *sure;
 
 	void calcStepVolume(const quint32 timeTotal);
 	void playSong();

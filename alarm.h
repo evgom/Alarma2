@@ -14,6 +14,7 @@ public:
 	Alarm(const QString file, const QDate &date, const QTime &time,
 				   Qt::TimeSpec spec = Qt::LocalTime, QObject *parent = 0);
 	Alarm(const QString file, const QDateTime &other, QObject *parent = 0);
+	~Alarm();
 
 	enum Days {
 		Monday = 1,
