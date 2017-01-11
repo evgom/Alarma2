@@ -304,7 +304,7 @@ void MainWindow::stopSong()
 
 void MainWindow::sleepSong()
 {
-	if (sound->state() == QMediaPlayer::PlayingState) {
+	if (sound->state() == QMediaPlayer::PlayingState && enableSleep) {
 		stopSong();
 		qDebug() << "Durmiendo por" << timeSleep << "segundos.";
 		timerSleepSong->start(timeSleep * 1000);
