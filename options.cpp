@@ -64,39 +64,39 @@ void Options::iniValues()
 void Options::readSettings()
 {
 	enableVolGrad = settings->isEnableVolGrad();
-	closeToTray = settings->isCloseToTray();
 	volIni = settings->getVolIni();
 	volFin = settings->getVolFin();
 	volInc = settings->getVolInc();
 	timeMaxVol = settings->getTimeMaxVol();
 	enableSleep = settings->isEnableSleep();
 	timeSleep = settings->getTimeSleep();
+	closeToTray = settings->isCloseToTray();
 }
 
 void Options::writeSettings()
 {
-	settings->setEnableVolGrad(newEnableSleep);
-	settings->setCloseToTray(newCloseToTray);
+	settings->setEnableVolGrad(newEnableVolGrad);
 	settings->setVolIni(newVolIni);
 	settings->setVolFin(newVolFin);
 	settings->setVolInc(newVolInc);
 	settings->setTimeMaxVol(newTimeMaxVol);
 	settings->setEnableSleep(newEnableSleep);
 	settings->setTimeSleep(newTimeSleep);
+	settings->setCloseToTray(newCloseToTray);
 
 	settings->writeSettings();
 }
 
 void Options::readValuesUI()
 {
-	newEnableSleep = ui->CHKvolGradual->isChecked();
-	newCloseToTray = ui->CHKcloseToTray->isChecked();
+	newEnableVolGrad = ui->CHKvolGradual->isChecked();
 	newVolIni = ui->CBvolIni->currentText().toInt();
 	newVolFin = ui->CBvolFin->currentText().toInt();
 	newVolInc = ui->CBvolInc->currentText().toInt();
 	newTimeMaxVol = timeToSecs(ui->TEtimeMaxVol->time());
 	newEnableSleep = ui->CHKSleep->isChecked();
 	newTimeSleep = timeToSecs(ui->TEtimeSleep->time());
+	newCloseToTray = ui->CHKcloseToTray->isChecked();
 }
 
 qint32 Options::timeToSecs(const QTime &time)
