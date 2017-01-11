@@ -244,6 +244,7 @@ void MainWindow::setFile(const QString file)
 		listSongs->addMedia(urlFile);
 
 		sound->setPlaylist(listSongs);
+		stopSong();
 	}
 	ui->LEsong->setText(urlFile.fileName());
 }
