@@ -21,7 +21,7 @@ void Settings::readSettings()
 
 	beginGroup("Sleep");
 	enableSleep = value("enableSleep", true).toBool();
-	timeSleep = value("timeSleep", 5).toInt();
+	timeSleep = value("timeSleep", 300).toInt();
 	endGroup();
 }
 
