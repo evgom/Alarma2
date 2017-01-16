@@ -48,6 +48,7 @@ private:
 	Options *op;
 	AlarmsConfigDialog *al;
 	DialogSure *sure;
+	QUrl urlFile;
 
 	void calcStepVolume(const quint32 timeTotal);
 	void playSong();
@@ -57,11 +58,11 @@ private:
 	void timeLeftNextAlarm();
 	void setTimeNow();
 	void checkAlarm();
-	void startAlarm();
-	void stopAlarm();
 	void calcDateNextAlarm();
 
 public slots:
+	void startAlarm();
+	void stopAlarm();
 	void toogleMainHide();
 	void setEnableAlarm(bool);
 	void toogleEnableAlarm();

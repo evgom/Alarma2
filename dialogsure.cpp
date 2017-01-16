@@ -7,7 +7,7 @@ DialogSure::DialogSure(QWidget *parent) :
 {
 	ui->setupUi(this);
 
-	connect(this, SIGNAL(stopAlarm()), parent, SLOT(initVal()));
+	connect(this, SIGNAL(stopAlarm()), parent, SLOT(stopAlarm()));
 }
 
 DialogSure::~DialogSure()
