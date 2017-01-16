@@ -49,7 +49,10 @@ void MainWindow::initVal()
 	// Config
 	timerSleepSong->setSingleShot(true);
 	sound->setAudioRole(QAudio::AlarmRole);
-	//listSongs->setPlaybackMode(QMediaPlaylist::Loop);
+
+	// Tal vez se necesite un método para desactivar el loop si únicamente
+	// hay archivos fallidos.
+	listSongs->setPlaybackMode(QMediaPlaylist::Loop);
 
 	stopAlarm();
 
