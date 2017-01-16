@@ -69,7 +69,7 @@ void SystemTray::actionsSysTray(QSystemTrayIcon::ActivationReason e)
 
 void SystemTray::msgAlarmStartedStoped(bool started)
 {
-	const qint32 timeMessage = 20000;
+	const qint32 timeMessage = 10000;
 
 	if(started)
 		showMessage(QApplication::applicationName(), "Alarma activada",
