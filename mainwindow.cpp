@@ -33,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	timerGetTimes->start(100);
 
 	timerSleepSong = new QTimer(this);
-	connect(timerSleepSong, SIGNAL(timeout()), this, SLOT(on_BTNtest_clicked()));
+	connect(timerSleepSong, SIGNAL(timeout()), this, SLOT(startAlarm()));
 
 	initVal();
 }
@@ -46,8 +46,11 @@ MainWindow::~MainWindow()
 
 void MainWindow::initVal()
 {
+	// Config
 	timerSleepSong->setSingleShot(true);
-	timerSleepSong->stop();
+	sound->setAudioRole(QAudio::AlarmRole);
+	//listSongs->setPlaybackMode(QMediaPlaylist::Loop);
+
 	stopAlarm();
 
 	readSettings();
@@ -101,6 +104,7 @@ void MainWindow::stopAlarm()
 	if (sound->state() == QMediaPlayer::PlayingState)
 		emit alarmStartedStoped(false);
 
+	timerSleepSong->stop();
 	alarmActive = false;
 	stopSong();
 }
@@ -234,17 +238,17 @@ void MainWindow::on_BTNAlarms_clicked()
 void MainWindow::setFile(const QString file)
 {
 	QFileInfo checkFile(file);
-	QUrl urlFile;
 
 	if (checkFile.exists() && checkFile.isFile()){
 		urlFile = QUrl::fromLocalFile(file);
 
-		listSongs->setPlaybackMode(QMediaPlaylist::Loop);
+
 		listSongs->clear();
 		listSongs->addMedia(urlFile);
 
 		sound->setPlaylist(listSongs);
-		stopSong();
+		// Para que no use el recurso de audio, hasta que se necesite.
+		listSongs->setCurrentIndex(-1);
 	}
 	ui->LEsong->setText(urlFile.fileName());
 }
@@ -286,7 +290,7 @@ void MainWindow::writeSettings()
 
 void MainWindow::playSong()
 {
-	if (sound->isAudioAvailable()) {
+	//if (sound->isAudioAvailable()) {
 		volume = volIni;
 		sound->setVolume(volume);
 
@@ -297,12 +301,15 @@ void MainWindow::playSong()
 		sound->play();
 		qDebug() << "Reproduciendo";
 		qDebug() << "Volumen:" << volume << "%";
-	}
+	//}
 }
 
 void MainWindow::stopSong()
 {
 	sound->stop();
+
+	// Index inexistente para que se libere el recurso de audio.
+	listSongs->setCurrentIndex(-1);
 	timerVol->stop();
 	qDebug() << "Deteniendo.";
 }
