@@ -122,10 +122,19 @@ void MainWindow::calcDateNextAlarm()
 	days = nextAlarm->getDays();
 
 	QList<int8_t> daysList(days.toList());
+	// Ordena la lista para que los días vayan de manera ascendente.
 	std::sort(daysList.begin(), daysList.end());
 	QListIterator<int8_t> i(daysList);
 
+	// Cálcula el número de días para la siguiente alarma
 	while(true) {
+		// Si alarma es el día de hoy, pero ya pasó se calcula para la siguiente.
+		if ( (today.dayOfWeek() == i.peekNext()) && (nextAlarm->getTime() < QTime::currentTime()) )
+		{
+			// Avanza una posición si la lista es mayor a uno.
+			if (daysList.count() > 1)
+				i.next();
+		}
 		daysToAdd = i.next() - today.dayOfWeek();
 
 		if (daysToAdd >= 0)
@@ -294,16 +303,16 @@ void MainWindow::writeSettings()
 void MainWindow::playSong()
 {
 	//if (sound->isAudioAvailable()) {
-		volume = volIni;
-		sound->setVolume(volume);
+	volume = volIni;
+	sound->setVolume(volume);
 
-		// Aumenta Volumen si está activado el volumen gradual.
-		if (enableVolGrad)
-			timerVol->start(timeStepVolume);
+	// Aumenta Volumen si está activado el volumen gradual.
+	if (enableVolGrad)
+		timerVol->start(timeStepVolume);
 
-		sound->play();
-		qDebug() << "Reproduciendo";
-		qDebug() << "Volumen:" << volume << "%";
+	sound->play();
+	qDebug() << "Reproduciendo";
+	qDebug() << "Volumen:" << volume << "%";
 	//}
 }
 
