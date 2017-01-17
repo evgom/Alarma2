@@ -267,7 +267,7 @@ void MainWindow::setFile(const QString file)
 
 void MainWindow::setNextAlarm(const Alarm &newAlarm)
 {
-	nextAlarm->setAlarm(newAlarm);
+	*nextAlarm = newAlarm;
 	// Calcular la fecha para la siguiente alarma con respecto a los días dados
 	calcDateNextAlarm();
 

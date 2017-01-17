@@ -97,7 +97,7 @@ QString Alarm::getDaysQstring() const
 	return qsetDaysToQstring(days);
 }
 
-void Alarm::setAlarm(const Alarm &other)
+void Alarm::operator =(const Alarm &other)
 {
 	setDate(other.getDate());
 	setTime(other.getTime());

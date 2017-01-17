@@ -46,5 +46,5 @@ Alarm* AlarmSettings::getAlarm()
 
 void AlarmSettings::setAlarm(const Alarm &newAlarm)
 {
-	alarm->setAlarm(newAlarm);
+	*alarm = newAlarm;
 }

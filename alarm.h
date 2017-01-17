@@ -39,7 +39,7 @@ public:
 	QSet<int8_t> getDays() const;
 	QString getDaysQstring() const;
 
-	void setAlarm(const Alarm &other);
+	void operator =(const Alarm &other);
 
 	static QSet<int8_t> qstringDaysToQset(const QString string);
 	static QString qsetDaysToQstring(const QSet<int8_t> set);
