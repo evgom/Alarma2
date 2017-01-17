@@ -32,13 +32,12 @@ public:
 	void setFile(const QString file);
 	void setDays(const QSet<int8_t> days);
 	void setDays(const QString days);
-	QDateTime getDateTime();
+	QDateTime getDateTime() const;
 	QDate getDate() const;
 	QTime getTime() const;
 	QString getFile() const;
 	QSet<int8_t> getDays() const;
 	QString getDaysQstring() const;
-
 	void operator =(const Alarm &other);
 
 	static QSet<int8_t> qstringDaysToQset(const QString string);

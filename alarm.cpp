@@ -64,12 +64,9 @@ void Alarm::setDays(const QString days)
 	setDays(qstringDaysToQset(days));
 }
 
-QDateTime Alarm::getDateTime()
+QDateTime Alarm::getDateTime() const
 {
-	QDateTime temp(*dateTime);
-	/*QDateTime temp;
-	temp.operator =(*dateTime);*/
-	return temp;
+	return *dateTime;
 }
 
 QDate Alarm::getDate() const
