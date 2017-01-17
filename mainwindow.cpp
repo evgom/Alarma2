@@ -302,18 +302,18 @@ void MainWindow::writeSettings()
 
 void MainWindow::playSong()
 {
-	//if (sound->isAudioAvailable()) {
-	volume = volIni;
-	sound->setVolume(volume);
+	if (sound->state() != QMediaPlayer::PlayingState) {
+		volume = volIni;
+		sound->setVolume(volume);
 
-	// Aumenta Volumen si está activado el volumen gradual.
-	if (enableVolGrad)
-		timerVol->start(timeStepVolume);
+		// Aumenta Volumen si está activado el volumen gradual.
+		if (enableVolGrad)
+			timerVol->start(timeStepVolume);
 
-	sound->play();
-	qDebug() << "Reproduciendo";
-	qDebug() << "Volumen:" << volume << "%";
-	//}
+		sound->play();
+		qDebug() << "Reproduciendo";
+		qDebug() << "Volumen:" << volume << "%";
+	}
 }
 
 void MainWindow::stopSong()
